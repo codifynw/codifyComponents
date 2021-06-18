@@ -2,53 +2,53 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './gallery-grid.css'
 
+const elements = ['one', 'two', 'three']
+
 /**
  * Grid to show galleries
  */
-export const Button = ({ primary, backgroundColor, size, label, ...props }) => {
-  const mode = primary
-    ? 'storybook-button--primary'
-    : 'storybook-button--secondary'
+export const GalleryGrid = ({ classList, columns, label, ...props }) => {
+  //   const mode = primary
+  //     ? 'storybook-button--primary'
+  //     : 'storybook-button--secondary'
   return (
-    <button
-      type="button"
-      className={['storybook-button', `storybook-button--${size}`, mode].join(
-        ' '
-      )}
-      style={backgroundColor && { backgroundColor }}
-      {...props}
-    >
-      {label}
-    </button>
+    <div className={['gallery-grid', classList].join(' ')} {...props}>
+      {elements.map((value, index) => {
+        return <div key={index}>{value}</div>
+      })}
+    </div>
   )
 }
 
-Button.propTypes = {
-  /**
-   * Is this the principal call to action on the page?
-   */
-  primary: PropTypes.bool,
+GalleryGrid.propTypes = {
   /**
    * What background color to use
    */
-  backgroundColor: PropTypes.string,
+  columns: PropTypes.number,
   /**
-   * How large should the button be?
+
+  /**
+   * Is this the principal call to action on the page?
    */
-  size: PropTypes.oneOf(['small', 'medium', 'large']),
+  // primary: PropTypes.bool,
+
+  /**
+   * Classes to add to the div
+   */
+  classList: PropTypes.string,
+
   /**
    * Button contents
    */
-  label: PropTypes.string.isRequired,
+  // label: PropTypes.string.isRequired,
+
   /**
    * Optional click handler
    */
   onClick: PropTypes.func,
 }
 
-Button.defaultProps = {
-  backgroundColor: null,
-  primary: false,
-  size: 'medium',
+GalleryGrid.defaultProps = {
+  columns: 3,
   onClick: undefined,
 }

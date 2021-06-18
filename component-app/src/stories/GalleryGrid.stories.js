@@ -1,36 +1,18 @@
 import React from 'react'
 
-import { Button } from '../components/gallery-grid/gallery-grid'
+import { GalleryGrid } from '../components/gallery-grid/gallery-grid'
 
 export default {
   title: 'Component/Grid',
-  component: Button,
+  component: GalleryGrid,
   argTypes: {
-    backgroundColor: { control: 'color' },
+    classList: 'test-class',
   },
 }
 
-const Template = (args) => <Button {...args} />
+const Template = (args) => <GalleryGrid {...args} />
 
 export const Primary = Template.bind({})
 Primary.args = {
-  primary: true,
-  label: 'Button',
-}
-
-export const Secondary = Template.bind({})
-Secondary.args = {
-  label: 'Button',
-}
-
-export const Large = Template.bind({})
-Large.args = {
-  size: 'large',
-  label: 'Button',
-}
-
-export const Small = Template.bind({})
-Small.args = {
-  size: 'small',
-  label: 'Button',
+  columns: 3,
 }
