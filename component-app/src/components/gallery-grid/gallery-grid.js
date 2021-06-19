@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import './gallery-grid.css'
+// import './gallery-grid.css'
 
 const elements = ['one', 'two', 'three']
 
@@ -12,7 +12,10 @@ export const GalleryGrid = ({ classList, columns, label, ...props }) => {
   //     ? 'storybook-button--primary'
   //     : 'storybook-button--secondary'
   return (
-    <div className={['gallery-grid', classList].join(' ')} {...props}>
+    <div
+      className={['gallery-grid grid-container', classList].join(' ')}
+      {...props}
+    >
       {elements.map((value, index) => {
         return <div key={index}>{value}</div>
       })}
