@@ -1,15 +1,13 @@
 {
-  "name": "component-app",
+  "name": "codify-components",
   "version": "0.1.0",
   "main": "dist/index.js",
-  "module": "dist/index.es.js",
   "files": [ "dist", "README.md" ],
-  "private": true,
+  "private": false,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "jawblia": "^0.2.0",
     "postcss": "^8.3.5",
     "postcss-loader": "^6.1.0",
     "react": "^17.0.2",
@@ -70,5 +68,9 @@
     "rollup": "^2.52.1",
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-serve": "^1.1.0"
-  }
+  },
+  "repository": {
+      "type": "git",
+      "url": "git+https://github.com/codifynw/codifyComponents"
+  },
 }
