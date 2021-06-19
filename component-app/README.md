@@ -1,9 +1,10 @@
-# HOW TO USE
+# Codify Components
 
-## Publish:
+## Install
 
-### npm publish --access=public
+Install using npm install codify-components
 
-## Run:
+## Usage
 
-### scripts are available in package.json
+In a React app, use the gallery-grid component
+import { GalleryGrid } from 'codifyComponents'
