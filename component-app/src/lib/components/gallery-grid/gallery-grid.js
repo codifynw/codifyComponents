@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-// import './gallery-grid.css'
+import './gallery-grid.css'
 
 const elements = ['one', 'two', 'three']
 

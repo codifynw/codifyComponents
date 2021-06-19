@@ -4,12 +4,13 @@ import babel from '@rollup/plugin-babel'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import replace from '@rollup/plugin-replace'
-// import postcss from 'rollup-plugin-postcss'
+import postcss from 'rollup-plugin-postcss'
+import path from 'path'
 
 export default {
-  input: 'src/components.js',
+  input: 'src/lib/components.js',
   output: {
-    file: 'dist/bundle.js',
+    file: 'dist/index.js',
     format: 'cjs',
     sourcemap: true,
   },
@@ -32,6 +33,10 @@ export default {
     //   port: 3000,
     // }),
     // livereload({ watch: 'dist' }),
-    // postcss(),
+    postcss({
+      extract: true,
+      // Or with custom file name
+      extract: path.resolve('dist/styles.css'),
+    }),
   ],
 }
