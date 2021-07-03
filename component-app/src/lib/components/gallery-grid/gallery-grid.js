@@ -1,13 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import './gallery-grid.css'
-
-const elements = ['one', 'two', 'three']
+import './gallery-grid.scss'
 
 /**
  * Grid to show galleries
  */
-export const GalleryGrid = ({ classList, columns, label, ...props }) => {
+export const GalleryGrid = ({ classList, items, ...props }) => {
   //   const mode = primary
   //     ? 'storybook-button--primary'
   //     : 'storybook-button--secondary'
@@ -16,8 +14,12 @@ export const GalleryGrid = ({ classList, columns, label, ...props }) => {
       className={['gallery-grid grid-container', classList].join(' ')}
       {...props}
     >
-      {elements.map((value, index) => {
-        return <div key={index}>{value}</div>
+      {items.map((value, index) => {
+        return (
+          <div className="grid-item" key={index}>
+            {value.title}
+          </div>
+        )
       })}
     </div>
   )
@@ -25,33 +27,21 @@ export const GalleryGrid = ({ classList, columns, label, ...props }) => {
 
 GalleryGrid.propTypes = {
   /**
-   * What background color to use
-   */
-  columns: PropTypes.number,
-  /**
-
-  /**
-   * Is this the principal call to action on the page?
-   */
-  // primary: PropTypes.bool,
-
-  /**
    * Classes to add to the div
    */
   classList: PropTypes.string,
 
   /**
-   * Button contents
-   */
-  // label: PropTypes.string.isRequired,
-
-  /**
    * Optional click handler
    */
   onClick: PropTypes.func,
+
+  /**
+   * Items to be included in the grid
+   */
+  items: PropTypes.array,
 }
 
 GalleryGrid.defaultProps = {
-  columns: 3,
   onClick: undefined,
 }
