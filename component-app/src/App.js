@@ -1,6 +1,6 @@
 import logo from './logo.svg'
 import './App.css'
-import { GalleryGrid } from './components'
+import { GalleryGrid } from './lib/components'
 
 function App() {
   return (
