@@ -1,6 +1,6 @@
 {
   "name": "codify-components",
-  "version": "0.1.0",
+  "version": "0.1.01",
   "main": "dist/index.js",
   "files": [ "dist", "README.md" ],
   "private": false,
