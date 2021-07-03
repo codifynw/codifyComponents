@@ -1,9 +1,4 @@
-// .grid-container {
-//   display: grid;
-//   grid-template-columns: repeat(2, 1fr);
-//   grid-auto-rows: 200px;
-//   gap: 10px;
-// }
+@import '../../../styles/breakpoints.scss';
 
 .grid-container {
   display: flex;
@@ -13,5 +8,9 @@
 .grid-item {
   background-color: black;
   color: tomato;
-  flex: 0 0 33%;
+  flex: 0 0 50%;
+
+  @include media-query($medium-up) {
+    flex: 0 0 33%;
+  }
 }
