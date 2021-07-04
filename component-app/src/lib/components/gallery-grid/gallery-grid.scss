@@ -6,10 +6,13 @@
   justify-content: center;
 }
 .grid-item {
-  color: tomato;
   flex: 0 0 50%;
 
   @include media-query($medium-up) {
     flex: 0 0 33%;
+  }
+
+  @include media-query($large-up) {
+    flex: 0 0 20%;
   }
 }
