@@ -1,6 +1,17 @@
 import React from 'react'
 
-import { GalleryGrid } from '../components/gallery-grid/gallery-grid'
+import { GalleryGrid } from '../../src/lib/components/gallery-grid/gallery-grid'
+
+const items = [
+  { title: 'new' },
+  { title: 'favorite' },
+  { title: 'dry' },
+  { title: 'wet' },
+  { title: 'summer' },
+  { title: 'longer title' },
+  { title: 'winter' },
+  { title: 'another long' },
+]
 
 export default {
   title: 'Component/Grid',
@@ -15,4 +26,5 @@ const Template = (args) => <GalleryGrid {...args} />
 export const Primary = Template.bind({})
 Primary.args = {
   columns: 3,
+  items: items,
 }
