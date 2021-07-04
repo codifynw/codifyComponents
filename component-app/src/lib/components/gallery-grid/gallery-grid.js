@@ -15,8 +15,16 @@ export const GalleryGrid = ({ classList, items, ...props }) => {
       {...props}
     >
       {items.map((value, index) => {
+        // var sectionStyle = {
+        //   backgroundImage: "url(" + {value.imgPath} + ")"
+        // };
+
         return (
-          <div className="grid-item" key={index}>
+          <div
+            className="grid-item"
+            key={index}
+            style={{ backgroundImage: 'url(' + value.imgPath + ')' }}
+          >
             {value.title}
           </div>
         )

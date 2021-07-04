@@ -1,22 +1,9 @@
 import logo from './logo.svg'
 import './App.css'
-import { GalleryGrid } from './lib/components'
-
-const items = [
-  { title: 'new' },
-  { title: 'favorite' },
-  { title: 'dry' },
-  { title: 'wet' },
-  { title: 'summer' },
-  { title: 'longer title' },
-  { title: 'winter' },
-  { title: 'another long' },
-]
 
 function App() {
   return (
     <div className="App">
-      <GalleryGrid items={items}></GalleryGrid>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>

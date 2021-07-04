@@ -1,17 +1,7 @@
 import React from 'react'
 
 import { GalleryGrid } from '../../src/lib/components/gallery-grid/gallery-grid'
-
-const items = [
-  { title: 'new' },
-  { title: 'favorite' },
-  { title: 'dry' },
-  { title: 'wet' },
-  { title: 'summer' },
-  { title: 'longer title' },
-  { title: 'winter' },
-  { title: 'another long' },
-]
+import { items } from '../lib/components/gallery-grid/stub'
 
 export default {
   title: 'Component/Grid',
