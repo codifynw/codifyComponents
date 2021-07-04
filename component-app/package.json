@@ -2,17 +2,11 @@
   "name": "codify-components",
   "version": "0.1.01",
   "main": "dist/index.js",
-  "files": [ "dist", "README.md" ],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "private": false,
-  "dependencies": {
-    "postcss": "^8.3.5",
-    "postcss-loader": "^6.1.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3",
-    "rollup-plugin-postcss": "^4.0.0",
-    "web-vitals": "^1.0.1"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "rollup -c",
@@ -50,9 +44,6 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^19.0.0",
     "@rollup/plugin-node-resolve": "^13.0.0",
@@ -65,12 +56,27 @@
     "@storybook/preset-create-react-app": "^3.1.7",
     "@storybook/react": "^6.2.9",
     "@storybook/theming": "^6.2.9",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "autoprefixer": "^10.2.6",
+    "cross-env": "^7.0.3",
+    "node-sass": "^6.0.1",
+    "postcss": "^8.3.5",
+    "postcss-loader": "^6.1.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
     "rollup": "^2.52.1",
     "rollup-plugin-livereload": "^2.0.0",
-    "rollup-plugin-serve": "^1.1.0"
+    "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-serve": "^1.1.0",
+    "web-vitals": "^1.0.1"
   },
+  "postcss": "^8.3.5",
+  "postcss-loader": "^6.1.0",
   "repository": {
-      "type": "git",
-      "url": "git+https://github.com/codifynw/codifyComponents"
+    "type": "git",
+    "url": "git+https://github.com/codifynw/codifyComponents"
   }
 }
