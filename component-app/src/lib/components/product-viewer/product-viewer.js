@@ -6,7 +6,14 @@ import './product-viewer.scss'
  */
 export const ProductViewer = ({ product, ...props }) => {
   const [windowWidth, setwindowWidth] = useState(window.innerWidth)
-  const [selectedProduct, setselectedProduct] = useState(0)
+  //   const [selectedProduct, setselectedProduct] = useState([0, 0, 0])
+
+  const [selectedProduct, setselectedProduct] = useState({})
+
+  function onChange(event) {
+    const { name, value } = event.target
+    setselectedProduct((prevState) => ({ ...prevState, [name]: value }))
+  }
 
   const handleResize = () => {
     setwindowWidth(window.innerWidth)
@@ -21,14 +28,15 @@ export const ProductViewer = ({ product, ...props }) => {
     window.addEventListener('resize', handleResize)
   }, [])
 
-  useEffect(() => {
-    console.log('in selectedProduct use effect')
-    console.log('product', product)
-  }, selectedProduct)
+  //   useEffect(() => {
+  //     console.log('product: ', product)
+  //   }, selectedProduct)
 
-  let theFunction = function () {
-    console.log(this)
-  }
+  //   const theFunction = (parentIndex, index) => {
+  //     console.log('parentIndex: ', parentIndex)
+  //     console.log('index: ', index)
+  //     setselectedProduct([parentIndex, index]) // remove the curly braces
+  //   }
 
   return (
     <section className={['product-viewer'].join(' ')} {...props}>
@@ -62,7 +70,9 @@ export const ProductViewer = ({ product, ...props }) => {
                       type="radio"
                       value={value}
                       name={option.name}
-                      className="option single-option-selector"
+                      className={`option single-option-selector ${
+                        selectedProduct === index ? 'active' : 'unactive'
+                      }`}
                       data-option-set={parentIndex}
                       data-option-index={index}
                       data-product-handle={product.handle}
@@ -70,7 +80,8 @@ export const ProductViewer = ({ product, ...props }) => {
                       id={`ProductSelect-option-${option.name}-${escape(
                         value.replace(/\s/g, '')
                       )}`}
-                      onClick={theFunction}
+                      onChange={onChange}
+                      //   onClick={() => theFunction(parentIndex, index)} // pass the index
                     ></input>
                     <label
                       className="simple"
