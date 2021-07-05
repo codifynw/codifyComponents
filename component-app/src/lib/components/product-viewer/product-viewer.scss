@@ -1,0 +1,51 @@
+// DEV ONLY
+.product-image-container {
+  background: black;
+}
+// END DEV ONLY
+
+.product-viewer {
+  display: flex;
+}
+
+.product-image-container {
+  display: flex;
+  width: 62%;
+  justify-content: center;
+  //   align-items: flex-end;
+  vertical-align: top;
+  margin: 0 20px 0 0;
+
+  .product-image-nav {
+    padding: 0px 10px;
+    width: 20%;
+  }
+  .product-hero-container {
+    width: 80%;
+    position: relative;
+
+    .hero-picture {
+      height: 200px;
+      width: 200px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: tomato;
+    }
+  }
+}
+
+.product-options-container {
+  height: 600px;
+  overflow: auto;
+  width: 35%;
+}
+
+.thumbnail {
+  height: 140px;
+  width: 100%;
+  margin: 10px 0px;
+  background-color: silver;
+  perspective: 900px;
+}

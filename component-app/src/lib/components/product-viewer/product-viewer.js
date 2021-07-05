@@ -31,52 +31,72 @@ export const ProductViewer = ({ product, ...props }) => {
   }
 
   return (
-    <div className={['product-viewer'].join(' ')} {...props}>
-      <div>{windowWidth}</div>
-      <form onSubmit={handleSubmit}>
-        {product.optionsWithValues.map((option, parentIndex) => (
-          <div className="option-container">
-            <div className="option-title">{option.name}</div>
-            <div className="options-container">
-              {option.values.map((value, index) => (
-                <div
-                  className={`option variant
+    <section className={['product-viewer'].join(' ')} {...props}>
+      <div className="product-image-container">
+        <div className="product-image-nav">
+          <div className="thumbnail"></div>
+          <div className="thumbnail"></div>
+          <div className="thumbnail"></div>
+          <div className="thumbnail"></div>
+        </div>
+        <div className="product-hero-container">
+          <div className="hero-picture"></div>
+        </div>
+      </div>
+      <div className="product-options-container">
+        <h3 className="title-container">{product.title}</h3>
+        <div className="product-description">{product.description}</div>
+        <form onSubmit={handleSubmit}>
+          {product.optionsWithValues.map((option, parentIndex) => (
+            <div className="option-container">
+              <div className="option-title">Select {option.name}:</div>
+              <div className="options-container">
+                {option.values.map((value, index) => (
+                  <div
+                    className={`option variant
                     ${option.name}
                     ${option.name}-${value.replace(/\s/g, '')}`}
-                  id={`toggle-${option.name}-${value.replace(/\s/g, '')}`}
-                >
-                  <input
-                    type="radio"
-                    value={value}
-                    name={option.name}
-                    className="option single-option-selector"
-                    data-option-set={parentIndex}
-                    data-option-index={index}
-                    data-product-handle={product.handle}
-                    data-value-escaped={value.replace(/\s/g, '')}
-                    id={`ProductSelect-option-${option.name}-${escape(
-                      value.replace(/\s/g, '')
-                    )}`}
-                    onClick={theFunction}
-                  ></input>
-                  <label
-                    className="simple"
-                    for={`ProductSelect-option-${option.name}-${value.replace(
-                      /\s/g,
-                      ''
-                    )}`}
+                    id={`toggle-${option.name}-${value.replace(/\s/g, '')}`}
                   >
-                    <div className="variant-text">
-                      {value.replace(/\s/g, '')}
-                    </div>
-                  </label>
-                </div>
-              ))}
+                    <input
+                      type="radio"
+                      value={value}
+                      name={option.name}
+                      className="option single-option-selector"
+                      data-option-set={parentIndex}
+                      data-option-index={index}
+                      data-product-handle={product.handle}
+                      data-value-escaped={value.replace(/\s/g, '')}
+                      id={`ProductSelect-option-${option.name}-${escape(
+                        value.replace(/\s/g, '')
+                      )}`}
+                      onClick={theFunction}
+                    ></input>
+                    <label
+                      className="simple"
+                      for={`ProductSelect-option-${option.name}-${value.replace(
+                        /\s/g,
+                        ''
+                      )}`}
+                    >
+                      <div className="variant-text">
+                        {value.replace(/\s/g, '')}
+                      </div>
+                    </label>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+          ))}
+          <button type="submit">
+            <span>{product.selected.price}</span>
+          </button>
+        </form>
+      </div>
+    </section>
   )
+}
+
+{
+  /* <div>{windowWidth}</div> */
 }
