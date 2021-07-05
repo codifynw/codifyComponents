@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import './product-viewer.scss'
 
-/**
- * Product Page
- */
+let thumbnails = ['main', 'details', 'wall']
+
 export const ProductViewer = ({ product, ...props }) => {
   const [windowWidth, setwindowWidth] = useState(window.innerWidth)
   const [selectedProduct, setselectedProduct] = useState({})
+  const [activeThumbnailIndex, setactiveThumbnailIndex] = useState(0)
 
-  function onChange(event) {
+  function onOptionSelect(event) {
     const { name, value } = event.target
     setselectedProduct((prevState) => ({ ...prevState, [name]: value }))
+  }
+
+  function onThumbnailSelect(index) {
+    setactiveThumbnailIndex(index)
   }
 
   const handleResize = () => {
@@ -30,10 +34,14 @@ export const ProductViewer = ({ product, ...props }) => {
     <section className={['product-viewer'].join(' ')} {...props}>
       <div className="product-image-container">
         <div className="product-image-nav">
-          <div className="thumbnail"></div>
-          <div className="thumbnail"></div>
-          <div className="thumbnail"></div>
-          <div className="thumbnail"></div>
+          {thumbnails.map((value, index) => (
+            <div
+              className={`thumbnail ${value} ${
+                activeThumbnailIndex === index ? 'active' : ''
+              }`}
+              onClick={() => onThumbnailSelect(index)} // pass the index
+            ></div>
+          ))}
         </div>
         <div className="product-hero-container">
           <div className="hero-picture"></div>
@@ -68,7 +76,7 @@ export const ProductViewer = ({ product, ...props }) => {
                       id={`ProductSelect-option-${option.name}-${escape(
                         value.replace(/\s/g, '')
                       )}`}
-                      onChange={onChange}
+                      onChange={onOptionSelect}
                     ></input>
                     <label
                       className="simple"
