@@ -28,8 +28,14 @@ export const ProductViewer = ({ product, ...props }) => {
   return (
     <div className={['product-viewer'].join(' ')} {...props}>
       <div>{windowWidth}</div>
-      {product.options.map((option, index) => (
-        <button onClick={theFunction}>{option}</button>
+      {product.optionsWithValues.map((option, index) => (
+        <div>
+          <div>{option.name}</div>
+
+          {option.values.map((value, index) => (
+            <button onClick={theFunction}>{value}</button>
+          ))}
+        </div>
       ))}
     </div>
   )
