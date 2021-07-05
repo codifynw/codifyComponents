@@ -12,6 +12,11 @@ export const ProductViewer = ({ product, ...props }) => {
     setwindowWidth(window.innerWidth)
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log('You clicked submit.')
+  }
+
   useEffect(() => {
     window.addEventListener('resize', handleResize)
   }, [])
@@ -22,21 +27,56 @@ export const ProductViewer = ({ product, ...props }) => {
   }, selectedProduct)
 
   let theFunction = function () {
-    console.log('test')
+    console.log(this)
   }
 
   return (
     <div className={['product-viewer'].join(' ')} {...props}>
       <div>{windowWidth}</div>
-      {product.optionsWithValues.map((option, index) => (
-        <div>
-          <div>{option.name}</div>
-
-          {option.values.map((value, index) => (
-            <button onClick={theFunction}>{value}</button>
-          ))}
-        </div>
-      ))}
+      <form onSubmit={handleSubmit}>
+        {product.optionsWithValues.map((option, parentIndex) => (
+          <div className="option-container">
+            <div className="option-title">{option.name}</div>
+            <div className="options-container">
+              {option.values.map((value, index) => (
+                <div
+                  className={`option variant
+                    ${option.name}
+                    ${option.name}-${value.replace(/\s/g, '')}`}
+                  id={`toggle-${option.name}-${value.replace(/\s/g, '')}`}
+                >
+                  <input
+                    type="radio"
+                    value={value}
+                    name={option.name}
+                    className="option single-option-selector"
+                    data-option-set={parentIndex}
+                    data-option-index={index}
+                    data-product-handle={product.handle}
+                    data-value-escaped={value.replace(/\s/g, '')}
+                    id={`ProductSelect-option-${option.name}-${escape(
+                      value.replace(/\s/g, '')
+                    )}`}
+                    onClick={theFunction}
+                  ></input>
+                  <label
+                    className="simple"
+                    for={`ProductSelect-option-${option.name}-${value.replace(
+                      /\s/g,
+                      ''
+                    )}`}
+                  >
+                    <div className="variant-text">
+                      {value.replace(/\s/g, '')}
+                    </div>
+                  </label>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+        <button type="submit">Submit</button>
+      </form>
     </div>
   )
 }
