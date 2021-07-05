@@ -37,18 +37,13 @@ export const ProductViewer = ({ product, ...props }) => {
           {thumbnails.map((value, index) => (
             <div
               key={index}
-              className={`thumbnail ${value} ${
-                activeThumbnailIndex === index ? 'active' : ''
-              }`}
+              className={`thumbnail ${value} ${activeThumbnailIndex === index ? 'active' : ''}`}
               onClick={() => onThumbnailSelect(index)} // pass the index
             ></div>
           ))}
         </div>
-        <div className="product-hero-container">
-          <div
-            style={{ backgroundImage: `url(${product.featured_image})` }}
-            className="hero-picture"
-          ></div>
+        <div className={`product-hero-container scene-${activeThumbnailIndex}`}>
+          <div style={{ backgroundImage: `url(${product.featured_image})` }} className="hero-picture"></div>
         </div>
       </div>
       <div className="product-options-container">
@@ -71,27 +66,16 @@ export const ProductViewer = ({ product, ...props }) => {
                       type="radio"
                       value={value}
                       name={option.name}
-                      className={`option single-option-selector ${
-                        selectedProduct === index ? 'active' : 'unactive'
-                      }`}
+                      className={`option single-option-selector ${selectedProduct === index ? 'active' : 'unactive'}`}
                       data-option-set={parentIndex}
                       data-option-index={index}
                       data-product-handle={product.handle}
                       data-value-escaped={value.replace(/\s/g, '')}
-                      id={`ProductSelect-option-${option.name}-${escape(
-                        value.replace(/\s/g, '')
-                      )}`}
+                      id={`ProductSelect-option-${option.name}-${escape(value.replace(/\s/g, ''))}`}
                       onChange={onOptionSelect}
                     ></input>
-                    <label
-                      className="simple"
-                      htmlFor={`ProductSelect-option-${
-                        option.name
-                      }-${value.replace(/\s/g, '')}`}
-                    >
-                      <div className="variant-text">
-                        {value.replace(/\s/g, '')}
-                      </div>
+                    <label className="simple" htmlFor={`ProductSelect-option-${option.name}-${value.replace(/\s/g, '')}`}>
+                      <div className="variant-text">{value.replace(/\s/g, '')}</div>
                     </label>
                   </div>
                 ))}

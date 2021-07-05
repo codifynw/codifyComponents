@@ -13,7 +13,6 @@
   display: flex;
   width: 62%;
   justify-content: center;
-  //   align-items: flex-end;
   vertical-align: top;
   margin: 0 20px 0 0;
 
@@ -23,6 +22,7 @@
   }
   .product-hero-container {
     width: 80%;
+    perspective: 900px;
     position: relative;
 
     .hero-picture {
@@ -36,6 +36,7 @@
       background-repeat: no-repeat;
       background-position: center center;
       box-shadow: -2px 4px 7px #000;
+      transition: transform 0s ease, all 0.4s ease;
 
       &::after {
         content: '';
@@ -48,8 +49,7 @@
         border-radius: 4px;
         overflow: hidden;
         pointer-events: none;
-        box-shadow: inset 3px -0.4px 3px rgb(0 0 0 / 45%),
-          inset -0.5px 1.2px 2px rgb(189 189 189 / 39%);
+        box-shadow: inset 3px -0.4px 3px rgb(0 0 0 / 45%), inset -0.5px 1.2px 2px rgb(189 189 189 / 39%);
       }
 
       &::before {
@@ -66,6 +66,12 @@
         background-image: url(//cdn.shopify.com/s/files/1/0246/0201/7873/t/18/assets/gloss.svg?v=7008897346709215366);
       }
     }
+
+    &.scene-1 {
+      .hero-picture {
+        transform: translate(-36%, -50%) rotateY(43deg) scale3d(1, 1, 1);
+      }
+    }
   }
 }
 
@@ -73,6 +79,8 @@
   height: 600px;
   overflow: auto;
   width: 35%;
+  padding-right: 15px;
+
   .options-container {
     display: flex;
   }
@@ -87,5 +95,43 @@
 
   &.active {
     outline: 3px #1185ed solid;
+  }
+}
+
+.option-title {
+  font-size: 16px;
+  padding-top: 25px;
+  padding-bottom: 20px;
+}
+.options-container {
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  background: 0 0;
+
+  .option {
+    width: 32%;
+    height: 65px;
+    z-index: 1;
+    cursor: pointer;
+    min-height: 75px;
+    position: relative;
+    margin-bottom: 7px;
+    background-color: #8e8e8e;
+    display: flex;
+    justify-content: space-between;
+  }
+  input[type='radio'] {
+    display: none;
+  }
+  .variant-text {
+    top: 50%;
+    left: 50%;
+    color: white;
+    white-space: nowrap;
+    font-weight: 500;
+    position: absolute;
+    transform: translate(-50%, -50%);
   }
 }
