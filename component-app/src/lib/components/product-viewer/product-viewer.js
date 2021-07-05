@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './product-viewer.scss'
 
-let thumbnails = ['main', 'details', 'wall']
+let thumbnails = ['main', 'details', 'wall', 'tbd']
 
 export const ProductViewer = ({ product, ...props }) => {
   const [windowWidth, setwindowWidth] = useState(window.innerWidth)
@@ -36,6 +36,7 @@ export const ProductViewer = ({ product, ...props }) => {
         <div className="product-image-nav">
           {thumbnails.map((value, index) => (
             <div
+              key={index}
               className={`thumbnail ${value} ${
                 activeThumbnailIndex === index ? 'active' : ''
               }`}
@@ -44,7 +45,10 @@ export const ProductViewer = ({ product, ...props }) => {
           ))}
         </div>
         <div className="product-hero-container">
-          <div className="hero-picture"></div>
+          <div
+            style={{ backgroundImage: `url(${product.featured_image})` }}
+            className="hero-picture"
+          ></div>
         </div>
       </div>
       <div className="product-options-container">
@@ -52,11 +56,12 @@ export const ProductViewer = ({ product, ...props }) => {
         <div className="product-description">{product.description}</div>
         <form onSubmit={handleSubmit}>
           {product.optionsWithValues.map((option, parentIndex) => (
-            <div className="option-container">
+            <div className="option-container" key={parentIndex}>
               <div className="option-title">Select {option.name}:</div>
               <div className="options-container">
                 {option.values.map((value, index) => (
                   <div
+                    key={index}
                     className={`option variant
                     ${option.name}
                     ${option.name}-${value.replace(/\s/g, '')}`}
@@ -80,10 +85,9 @@ export const ProductViewer = ({ product, ...props }) => {
                     ></input>
                     <label
                       className="simple"
-                      for={`ProductSelect-option-${option.name}-${value.replace(
-                        /\s/g,
-                        ''
-                      )}`}
+                      htmlFor={`ProductSelect-option-${
+                        option.name
+                      }-${value.replace(/\s/g, '')}`}
                     >
                       <div className="variant-text">
                         {value.replace(/\s/g, '')}
