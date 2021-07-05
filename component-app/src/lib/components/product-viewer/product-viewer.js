@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { HeroImage } from '../hero-image/hero-image'
 import './product-viewer.scss'
 
 let thumbnails = ['main', 'details', 'wall', 'tbd']
@@ -37,13 +38,15 @@ export const ProductViewer = ({ product, ...props }) => {
           {thumbnails.map((value, index) => (
             <div
               key={index}
-              className={`thumbnail ${value} ${activeThumbnailIndex === index ? 'active' : ''}`}
+              className={`thumbnail thumbnail-${value} ${value} ${activeThumbnailIndex === index ? 'active' : ''}`}
               onClick={() => onThumbnailSelect(index)} // pass the index
-            ></div>
+            >
+              <HeroImage featured_image={product.featured_image} />
+            </div>
           ))}
         </div>
         <div className={`product-hero-container scene-${activeThumbnailIndex}`}>
-          <div style={{ backgroundImage: `url(${product.featured_image})` }} className="hero-picture"></div>
+          <HeroImage featured_image={product.featured_image} />
         </div>
       </div>
       <div className="product-options-container">
