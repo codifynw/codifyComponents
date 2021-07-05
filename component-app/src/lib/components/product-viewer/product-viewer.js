@@ -6,8 +6,6 @@ import './product-viewer.scss'
  */
 export const ProductViewer = ({ product, ...props }) => {
   const [windowWidth, setwindowWidth] = useState(window.innerWidth)
-  //   const [selectedProduct, setselectedProduct] = useState([0, 0, 0])
-
   const [selectedProduct, setselectedProduct] = useState({})
 
   function onChange(event) {
@@ -27,16 +25,6 @@ export const ProductViewer = ({ product, ...props }) => {
   useEffect(() => {
     window.addEventListener('resize', handleResize)
   }, [])
-
-  //   useEffect(() => {
-  //     console.log('product: ', product)
-  //   }, selectedProduct)
-
-  //   const theFunction = (parentIndex, index) => {
-  //     console.log('parentIndex: ', parentIndex)
-  //     console.log('index: ', index)
-  //     setselectedProduct([parentIndex, index]) // remove the curly braces
-  //   }
 
   return (
     <section className={['product-viewer'].join(' ')} {...props}>
@@ -81,7 +69,6 @@ export const ProductViewer = ({ product, ...props }) => {
                         value.replace(/\s/g, '')
                       )}`}
                       onChange={onChange}
-                      //   onClick={() => theFunction(parentIndex, index)} // pass the index
                     ></input>
                     <label
                       className="simple"
