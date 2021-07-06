@@ -93,6 +93,7 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
                 wallSizes={wallSizes}
                 featured_image={product.featured_image}
                 wallStyles={wallSizes}
+                thumbnailIndex={value}
               />
             </div>
           ))}
@@ -122,6 +123,7 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
             wallStyles={wallSizes}
             rotateImage={activeThumbnailIndex === 1}
             onWall={activeThumbnailIndex === 2}
+            thumbnailIndex={'end end end end end'}
           />
         </div>
       </div>
