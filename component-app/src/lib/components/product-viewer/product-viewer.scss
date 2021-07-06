@@ -119,6 +119,10 @@
     background-color: #8e8e8e;
     display: flex;
     justify-content: space-between;
+
+    &.active {
+      background-color: darkblue;
+    }
   }
   input[type='radio'] {
     display: none;
@@ -172,4 +176,9 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+}
+
+.simple {
+  height: 100%;
+  width: 100%;
 }

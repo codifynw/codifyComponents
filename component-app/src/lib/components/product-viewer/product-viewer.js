@@ -31,6 +31,8 @@ export const ProductViewer = ({ product, ...props }) => {
     window.addEventListener('resize', handleResize)
   }, [])
 
+  console.log('selectedProduct: ', selectedProduct)
+
   return (
     <section className={['product-viewer'].join(' ')} {...props}>
       <div className="product-image-container">
@@ -62,6 +64,7 @@ export const ProductViewer = ({ product, ...props }) => {
                     key={index}
                     className={`option variant
                     ${option.name}
+                    ${selectedProduct[option.name] === value ? 'active' : ''}
                     ${option.name}-${value.replace(/\s/g, '')}`}
                     id={`toggle-${option.name}-${value.replace(/\s/g, '')}`}
                   >
@@ -69,7 +72,7 @@ export const ProductViewer = ({ product, ...props }) => {
                       type="radio"
                       value={value}
                       name={option.name}
-                      className={`option single-option-selector ${selectedProduct === index ? 'active' : 'unactive'}`}
+                      className={`option single-option-selector`}
                       data-option-set={parentIndex}
                       data-option-index={index}
                       data-product-handle={product.handle}
