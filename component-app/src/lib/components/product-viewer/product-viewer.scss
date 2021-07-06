@@ -139,6 +139,7 @@
   }
 }
 
+.thumbnail-wall,
 .thumbnail-main {
   .hero-picture {
     position: absolute;
@@ -151,6 +152,7 @@
     transform: translate(-50%, -50%);
   }
 }
+
 .thumbnail-details {
   perspective: 1000px;
   .hero-picture {
@@ -184,8 +186,17 @@
   width: 100%;
 }
 
-.product-hero-container {
+.product-hero-container,
+.thumbnail-wall {
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+.single-option-select {
+  display: none;
+
+  &.show {
+    display: block;
+  }
 }

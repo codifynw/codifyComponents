@@ -9,9 +9,13 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
   const [selectedProduct, setselectedProduct] = useState({})
   const [activeThumbnailIndex, setactiveThumbnailIndex] = useState(0)
   const [activeRoom, setactiveRoom] = useState(0)
+  const [size, setsize] = useState('')
 
   function onOptionSelect(event) {
     const { name, value } = event.target
+    if (name.toLowerCase() === 'size') {
+      setsize(value)
+    }
     setselectedProduct((prevState) => ({ ...prevState, [name]: value }))
   }
 
@@ -47,6 +51,9 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
               className={`thumbnail thumbnail-${value} ${value} ${
                 activeThumbnailIndex === index ? 'active' : ''
               }`}
+              style={{
+                backgroundImage: index == 2 ? `url(${rooms[activeRoom].url})` : '',
+              }}
               onClick={() => onThumbnailSelect(index)} // pass the index
             >
               <HeroImage featured_image={product.featured_image} />
@@ -55,10 +62,14 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
         </div>
         <div
           className={`product-hero-container scene-${activeThumbnailIndex}`}
-          style={{ backgroundImage: `url(${rooms[activeRoom].url})` }}
+          style={{
+            backgroundImage: activeThumbnailIndex == 2 ? `url(${rooms[activeRoom].url})` : '',
+          }}
         >
           <select
-            className="single-option-select background-setting-select"
+            className={`single-option-select background-setting-select
+                ${activeThumbnailIndex === 2 ? 'show' : ''}
+            `}
             name="Room"
             onChange={onRoomSelect}
           >
