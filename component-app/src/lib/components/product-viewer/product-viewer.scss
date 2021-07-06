@@ -46,7 +46,8 @@
         border-radius: 4px;
         overflow: hidden;
         pointer-events: none;
-        box-shadow: inset 3px -0.4px 3px rgb(0 0 0 / 45%), inset -0.5px 1.2px 2px rgb(189 189 189 / 39%);
+        box-shadow: inset 3px -0.4px 3px rgb(0 0 0 / 45%),
+          inset -0.5px 1.2px 2px rgb(189 189 189 / 39%);
       }
 
       &::before {
@@ -181,4 +182,10 @@
 .simple {
   height: 100%;
   width: 100%;
+}
+
+.product-hero-container {
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }

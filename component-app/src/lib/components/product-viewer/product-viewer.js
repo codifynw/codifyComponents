@@ -4,10 +4,11 @@ import './product-viewer.scss'
 
 let thumbnails = ['main', 'details', 'wall', 'tbd']
 
-export const ProductViewer = ({ product, ...props }) => {
+export const ProductViewer = ({ product, rooms, ...props }) => {
   const [windowWidth, setwindowWidth] = useState(window.innerWidth)
   const [selectedProduct, setselectedProduct] = useState({})
   const [activeThumbnailIndex, setactiveThumbnailIndex] = useState(0)
+  const [activeRoom, setactiveRoom] = useState(0)
 
   function onOptionSelect(event) {
     const { name, value } = event.target
@@ -16,6 +17,11 @@ export const ProductViewer = ({ product, ...props }) => {
 
   function onThumbnailSelect(index) {
     setactiveThumbnailIndex(index)
+  }
+
+  function onRoomSelect(event) {
+    const { name, value } = event.target
+    setactiveRoom(value)
   }
 
   const handleResize = () => {
@@ -31,8 +37,6 @@ export const ProductViewer = ({ product, ...props }) => {
     window.addEventListener('resize', handleResize)
   }, [])
 
-  console.log('selectedProduct: ', selectedProduct)
-
   return (
     <section className={['product-viewer'].join(' ')} {...props}>
       <div className="product-image-container">
@@ -40,14 +44,30 @@ export const ProductViewer = ({ product, ...props }) => {
           {thumbnails.map((value, index) => (
             <div
               key={index}
-              className={`thumbnail thumbnail-${value} ${value} ${activeThumbnailIndex === index ? 'active' : ''}`}
+              className={`thumbnail thumbnail-${value} ${value} ${
+                activeThumbnailIndex === index ? 'active' : ''
+              }`}
               onClick={() => onThumbnailSelect(index)} // pass the index
             >
               <HeroImage featured_image={product.featured_image} />
             </div>
           ))}
         </div>
-        <div className={`product-hero-container scene-${activeThumbnailIndex}`}>
+        <div
+          className={`product-hero-container scene-${activeThumbnailIndex}`}
+          style={{ backgroundImage: `url(${rooms[activeRoom].url})` }}
+        >
+          <select
+            className="single-option-select background-setting-select"
+            name="Room"
+            onChange={onRoomSelect}
+          >
+            {rooms.map((room, index) => (
+              <option key={index} value={index}>
+                {room.title}
+              </option>
+            ))}
+          </select>
           <HeroImage featured_image={product.featured_image} />
         </div>
       </div>
@@ -64,7 +84,7 @@ export const ProductViewer = ({ product, ...props }) => {
                     key={index}
                     className={`option variant
                     ${option.name}
-                    ${selectedProduct[option.name] === value ? 'active' : ''}
+                    ${selectedProduct[option.name] === value ? 'active' : ''}   
                     ${option.name}-${value.replace(/\s/g, '')}`}
                     id={`toggle-${option.name}-${value.replace(/\s/g, '')}`}
                   >
@@ -80,7 +100,10 @@ export const ProductViewer = ({ product, ...props }) => {
                       id={`ProductSelect-option-${option.name}-${escape(value.replace(/\s/g, ''))}`}
                       onChange={onOptionSelect}
                     ></input>
-                    <label className="simple" htmlFor={`ProductSelect-option-${option.name}-${value.replace(/\s/g, '')}`}>
+                    <label
+                      className="simple"
+                      htmlFor={`ProductSelect-option-${option.name}-${value.replace(/\s/g, '')}`}
+                    >
                       <div className="variant-text">{value.replace(/\s/g, '')}</div>
                     </label>
                   </div>
