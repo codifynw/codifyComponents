@@ -10,10 +10,7 @@ export const GalleryGrid = ({ classList, items, ...props }) => {
   //     ? 'storybook-button--primary'
   //     : 'storybook-button--secondary'
   return (
-    <div
-      className={['gallery-grid grid-container', classList].join(' ')}
-      {...props}
-    >
+    <div className={['gallery-grid grid-container', classList].join(' ')} {...props}>
       {items.map((value, index) => {
         // var sectionStyle = {
         //   backgroundImage: "url(" + {value.imgPath} + ")"

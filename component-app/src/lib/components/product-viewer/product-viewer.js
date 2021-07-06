@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { HeroImage } from '../hero-image/hero-image'
+import { ProductImage } from '../product-image/product-image'
 import './product-viewer.scss'
 
 let thumbnails = ['main', 'details', 'wall', 'tbd']
@@ -8,8 +8,9 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
   const [windowWidth, setwindowWidth] = useState(window.innerWidth)
   const [selectedProduct, setselectedProduct] = useState({})
   const [activeThumbnailIndex, setactiveThumbnailIndex] = useState(0)
-  const [activeRoom, setactiveRoom] = useState(0)
-  const [size, setsize] = useState('')
+  const [activeRoomIndex, setactiveRoomIndex] = useState(0)
+  const [size, setsize] = useState('0x0')
+  const [wallSizes, setwallSizes] = useState({})
 
   function onOptionSelect(event) {
     const { name, value } = event.target
@@ -25,7 +26,44 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
 
   function onRoomSelect(event) {
     const { name, value } = event.target
-    setactiveRoom(value)
+    setactiveRoomIndex(value)
+  }
+
+  function calculateWallSizes(dimensions) {
+    console.log('dimensions: ', dimensions)
+    const [width, height] = dimensions.split('x')
+
+    const box = document.querySelector('#product-hero-container')
+    const containerWidth = box.offsetWidth
+    const containerHeight = box.offsetHeight
+
+    const landscapeOrientation =
+      product.media[0]?.preview_image?.width > product.media[0]?.preview_image?.height
+
+    console.log(containerWidth)
+    console.log(containerHeight)
+    console.log(landscapeOrientation)
+
+    // CALCULATE PPI ARRAY
+    const scalePercent = rooms[activeRoomIndex].scalePercent
+    console.log(scalePercent)
+    const scaledPixels = containerWidth * scalePercent
+    const PPI = scaledPixels / rooms[activeRoomIndex].scaleInches
+    const resizedArray = [height * PPI, width * PPI]
+
+    // CALCULATE VERTICAL POSITION
+    let centerYPointPixels = ''
+    if (landscapeOrientation) {
+      centerYPointPixels = rooms[activeRoomIndex].verticalCenter * containerHeight
+    } else {
+      centerYPointPixels = rooms[activeRoomIndex].portraitVerticalCenter * containerHeight
+    }
+    const newTop = centerYPointPixels - resizedArray[0] * 0.5
+
+    console.log([newTop, resizedArray])
+    // setwallSizes({ top: newTop })
+    // setwallSizes({ width: resizedArray[0] })
+    setwallSizes({ height: resizedArray[1] })
   }
 
   const handleResize = () => {
@@ -36,6 +74,10 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
     e.preventDefault()
     console.log('You clicked submit.')
   }
+
+  useEffect(() => {
+    calculateWallSizes(size)
+  }, [size])
 
   useEffect(() => {
     window.addEventListener('resize', handleResize)
@@ -52,18 +94,19 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
                 activeThumbnailIndex === index ? 'active' : ''
               }`}
               style={{
-                backgroundImage: index == 2 ? `url(${rooms[activeRoom].url})` : '',
+                backgroundImage: index == 2 ? `url(${rooms[activeRoomIndex].url})` : '',
               }}
               onClick={() => onThumbnailSelect(index)} // pass the index
             >
-              <HeroImage featured_image={product.featured_image} />
+              <ProductImage featured_image={product.featured_image} wallStyles={wallSizes} />
             </div>
           ))}
         </div>
         <div
+          id="product-hero-container"
           className={`product-hero-container scene-${activeThumbnailIndex}`}
           style={{
-            backgroundImage: activeThumbnailIndex == 2 ? `url(${rooms[activeRoom].url})` : '',
+            backgroundImage: activeThumbnailIndex == 2 ? `url(${rooms[activeRoomIndex].url})` : '',
           }}
         >
           <select
@@ -79,7 +122,7 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
               </option>
             ))}
           </select>
-          <HeroImage featured_image={product.featured_image} />
+          <ProductImage featured_image={product.featured_image} />
         </div>
       </div>
       <div className="product-options-container">
