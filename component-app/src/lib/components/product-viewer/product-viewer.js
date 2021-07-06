@@ -10,7 +10,7 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
   const [activeThumbnailIndex, setactiveThumbnailIndex] = useState(0)
   const [activeRoomIndex, setactiveRoomIndex] = useState(0)
   const [size, setsize] = useState('0x0')
-  const [wallSizes, setwallSizes] = useState({})
+  const [wallSizes, setwallSizes] = useState({ width: '150px', height: '100px', top: '0' })
 
   function onOptionSelect(event) {
     const { name, value } = event.target
@@ -30,8 +30,7 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
   }
 
   function calculateWallSizes(dimensions) {
-    console.log('dimensions: ', dimensions)
-    const [width, height] = dimensions.split('x')
+    const [height, width] = dimensions.split('x')
 
     const box = document.querySelector('#product-hero-container')
     const containerWidth = box.offsetWidth
@@ -40,7 +39,7 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
     const landscapeOrientation =
       product.media[0]?.preview_image?.width > product.media[0]?.preview_image?.height
 
-    // CALCULATE PPI ARRAY
+    // CALCULATE PixelPerInch ARRAY
     const scalePercent = rooms[activeRoomIndex].scalePercent
     const scaledPixels = containerWidth * scalePercent
     const PPI = scaledPixels / rooms[activeRoomIndex].scaleInches
@@ -54,11 +53,7 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
       centerYPointPixels = rooms[activeRoomIndex].portraitVerticalCenter * containerHeight
     }
     const newTop = centerYPointPixels - resizedArray[0] * 0.5
-
-    console.log([newTop, resizedArray])
-    // setwallSizes({ top: newTop })
-    // setwallSizes({ width: resizedArray[0] })
-    setwallSizes({ height: resizedArray[1] })
+    setwallSizes({ height: resizedArray[0], width: resizedArray[1], top: newTop })
   }
 
   const handleResize = () => {
@@ -93,7 +88,12 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
               }}
               onClick={() => onThumbnailSelect(index)} // pass the index
             >
-              <ProductImage featured_image={product.featured_image} wallStyles={wallSizes} />
+              <ProductImage
+                onWall={value === 'wall'}
+                wallSizes={wallSizes}
+                featured_image={product.featured_image}
+                wallStyles={wallSizes}
+              />
             </div>
           ))}
         </div>
@@ -119,7 +119,9 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
           </select>
           <ProductImage
             featured_image={product.featured_image}
-            activeThumbnailIndex={activeThumbnailIndex}
+            wallStyles={wallSizes}
+            rotateImage={activeThumbnailIndex === 1}
+            onWall={activeThumbnailIndex === 2}
           />
         </div>
       </div>

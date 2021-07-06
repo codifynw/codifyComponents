@@ -2,9 +2,10 @@ import styled from 'styled-components'
 
 const Image = styled.section`
   height: 200px;
-  width: 200px;
+  width: ${(props) => (props.onWall ? props.wallStyles.width + 'px' : '200px')};
+  height: ${(props) => (props.onWall ? props.wallStyles.height + 'px' : '150px')};
+  top: ${(props) => (props.onWall ? props.wallStyles.top + '%' : '50%')};
   position: absolute;
-  top: 50%;
   left: ${(props) => (props.left ? props.left : '50%')};
   background-image: url(${(props) => props.featured_image});
   transition: transform 0s ease, all 0.4s ease;
@@ -17,19 +18,15 @@ const Image = styled.section`
     props.rotateImage ? '-18px 6px 7px -6px rgb(0 0 0 / 10%)' : '-2px 4px 7px #000'};
 `
 
-const setRotateImage = function (activeThumbnailIndex) {
-  return activeThumbnailIndex === 1
-}
-
-export const ProductImage = ({ featured_image, activeThumbnailIndex, wallStyles, ...props }) => {
-  let rotateImage = setRotateImage(activeThumbnailIndex)
+export const ProductImage = ({ featured_image, rotateImage, onWall, wallStyles, ...props }) => {
   return (
     <div>
       <Image
         className="hero-picture"
         featured_image={featured_image}
         rotateImage={rotateImage}
-        activeThumbnailIndex={activeThumbnailIndex}
+        onWall={onWall}
+        wallStyles={wallStyles}
       />
     </div>
   )
