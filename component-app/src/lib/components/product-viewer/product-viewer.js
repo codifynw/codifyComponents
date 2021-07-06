@@ -40,13 +40,8 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
     const landscapeOrientation =
       product.media[0]?.preview_image?.width > product.media[0]?.preview_image?.height
 
-    console.log(containerWidth)
-    console.log(containerHeight)
-    console.log(landscapeOrientation)
-
     // CALCULATE PPI ARRAY
     const scalePercent = rooms[activeRoomIndex].scalePercent
-    console.log(scalePercent)
     const scaledPixels = containerWidth * scalePercent
     const PPI = scaledPixels / rooms[activeRoomIndex].scaleInches
     const resizedArray = [height * PPI, width * PPI]
@@ -122,7 +117,10 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
               </option>
             ))}
           </select>
-          <ProductImage featured_image={product.featured_image} />
+          <ProductImage
+            featured_image={product.featured_image}
+            activeThumbnailIndex={activeThumbnailIndex}
+          />
         </div>
       </div>
       <div className="product-options-container">

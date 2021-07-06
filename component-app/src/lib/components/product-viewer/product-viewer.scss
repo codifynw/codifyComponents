@@ -26,15 +26,6 @@
     position: relative;
 
     .hero-picture {
-      height: 200px;
-      width: 200px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      box-shadow: -2px 4px 7px #000;
-      transition: transform 0s ease, all 0.4s ease;
-
       &::after {
         content: '';
         position: absolute;
@@ -62,13 +53,6 @@
         background-size: cover;
         background-repeat: no-repeat;
         background-image: url(//cdn.shopify.com/s/files/1/0246/0201/7873/t/18/assets/gloss.svg?v=7008897346709215366);
-      }
-    }
-
-    &.scene-1 {
-      .hero-picture {
-        box-shadow: -18px 6px 7px -6px rgb(0 0 0 / 10%);
-        transform: translate(-36%, -50%) rotateY(43deg) scale3d(1, 1, 1);
       }
     }
   }
@@ -155,17 +139,6 @@
 
 .thumbnail-details {
   perspective: 1000px;
-  .hero-picture {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    height: 50px;
-    width: 50px;
-    border-radius: 1px;
-    box-shadow: -18px 6px 7px -6px rgb(0 0 0 / 10%);
-    transform: translate(-50%, -50%);
-    transform: translate(-29%, -50%) matrix3d(0.74, 0, -3, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-  }
 }
 .thumbnail-wall {
 }
