@@ -1,27 +1,20 @@
 import styled from 'styled-components'
 
-const Image = styled.section`
-
-position: absolute;
-top: 50%;
-left: 50%;
-height: 50px;
-width: 50px;
-border-radius: 1px;
-box-shadow: -2px 4px 7px rgba(0, 0, 0, 0.8);
-transform: translate(-50%, -50%);
-
-  height: 200px;
-  width: ${(props) => props.widthValue};
-
-  height: ${(props) => (props.onWall ? props.wallStyles.height + 'px' : '150px')};
-  top: ${(props) => (props.onWall ? props.wallStyles.top + 'px' : '50%')};
+const Image = styled.div`
+  top: 50%;
+  left: 50%;
+  border-radius: 1px;
   position: absolute;
+
+  width: ${(props) => props.widthValue};
+  height: ${(props) => props.heightValue};
+
+  top: ${(props) => (props.onWall ? props.wallStyles.top + 'px' : '50%')};
   left: ${(props) => (props.left ? props.left : '50%')};
   background-image: url(${(props) => props.featured_image});
   transition: transform 0s ease, all 0.4s ease;
 
-  transform: ${(props) => props.transformValue});
+  transform: ${(props) => props.transformValue};
   box-shadow: ${(props) =>
     props.rotateImage ? '-18px 6px 7px -6px rgb(0 0 0 / 10%)' : '-2px 4px 7px #000'};
 `
@@ -34,26 +27,32 @@ export const ProductImage = ({
   thumbnailIndex,
   ...props
 }) => {
-  console.log('********** **********')
-  console.log('onWall: ', onWall)
-  console.log('thumbnailIndex: ', thumbnailIndex)
-
   const determineTransform = function () {
+    console.log('rotateImage: ', rotateImage)
     if (onWall) {
+      console.log('I return initial')
       return 'initial'
     }
     if (rotateImage) {
+      console.log('I return rotate image')
       return 'translate(-36%, -50%) rotateY(43deg) scale3d(1, 1, 1)'
     }
+    console.log('I RETURN 5050')
     return 'translate(-50%, -50%)'
   }
 
   const determineWidth = function () {
     if (onWall) {
-      console.log('ON THE WALL')
       return wallStyles.width + 'px'
     }
-    return '200px'
+    return '50%'
+  }
+
+  const determineHeight = function () {
+    if (onWall) {
+      return wallStyles.height + 'px'
+    }
+    return '50%'
   }
 
   return (
@@ -65,6 +64,7 @@ export const ProductImage = ({
         onWall={onWall}
         wallStyles={wallStyles}
         widthValue={determineWidth()}
+        heightValue={determineHeight()}
         transformValue={determineTransform()}
       />
     </div>
