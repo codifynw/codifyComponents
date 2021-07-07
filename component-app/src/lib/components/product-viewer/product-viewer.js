@@ -4,13 +4,38 @@ import './product-viewer.scss'
 
 let thumbnails = ['main', 'details', 'wall', 'tbd']
 
+let generateViewers = function () {
+  let viewers = [
+    {
+      name: 'room',
+      selector: '#product-hero-container',
+    },
+    {
+      name: 'thumbnail',
+      selector: '#thumbnail-wall',
+    },
+  ]
+
+  viewers.map((viewer, index) => {
+    viewer.container = {
+      element: document.querySelector(viewer.selector),
+    }
+
+    if (viewer.container.element) {
+      viewer.container.width = viewer.container.element.offsetWidth
+      viewer.container.height = viewer.container.element.offsetHeight
+    }
+  })
+  return viewers
+}
+
 export const ProductViewer = ({ product, rooms, ...props }) => {
   const [windowWidth, setwindowWidth] = useState(window.innerWidth)
   const [selectedProduct, setselectedProduct] = useState({})
   const [activeThumbnailIndex, setactiveThumbnailIndex] = useState(0)
   const [activeRoomIndex, setactiveRoomIndex] = useState(0)
   const [size, setsize] = useState('0x0')
-  const [wallSizes, setwallSizes] = useState({ width: '150px', height: '100px', top: '0' })
+  const [wallSizes, setwallSizes] = useState([])
 
   function onOptionSelect(event) {
     const { name, value } = event.target
@@ -31,29 +56,37 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
 
   function calculateWallSizes(dimensions) {
     const [height, width] = dimensions.split('x')
-
-    const box = document.querySelector('#product-hero-container')
-    const containerWidth = box.offsetWidth
-    const containerHeight = box.offsetHeight
-
-    const landscapeOrientation =
+    const isLandscapeOrientation =
       product.media[0]?.preview_image?.width > product.media[0]?.preview_image?.height
+    let viewers = generateViewers()
 
-    // CALCULATE PixelPerInch ARRAY
+    // PERCENT OF PHOTO OCCUPIED BY OBJECT WITh KNOWN MEASUREMENT
+    // IF A BED IS 60 IN. AND TAKES UP 60% OF THE PHOTO, WE KNOW
+    // THE PHOTO LENGTH SPANS 100 INCHES
     const scalePercent = rooms[activeRoomIndex].scalePercent
-    const scaledPixels = containerWidth * scalePercent
-    const PPI = scaledPixels / rooms[activeRoomIndex].scaleInches
-    const resizedArray = [height * PPI, width * PPI]
 
-    // CALCULATE VERTICAL POSITION
-    let centerYPointPixels = ''
-    if (landscapeOrientation) {
-      centerYPointPixels = rooms[activeRoomIndex].verticalCenter * containerHeight
-    } else {
-      centerYPointPixels = rooms[activeRoomIndex].portraitVerticalCenter * containerHeight
-    }
-    const newTop = centerYPointPixels - resizedArray[0] * 0.5
-    setwallSizes({ height: resizedArray[0], width: resizedArray[1], top: newTop })
+    viewers.map((viewer, index) => {
+      const scaledPixels = viewer.container.width * scalePercent
+      const PPI = scaledPixels / rooms[activeRoomIndex].scaleInches
+      const resizedArray = [viewer.container.height * PPI, viewer.container.width * PPI]
+
+      setwallSizes((prevState) => ({
+        ...prevState,
+        [viewer.name]: { height: resizedArray[0], width: resizedArray[1], top: '20' },
+      }))
+    })
+
+    console.log('wallSizes: ', wallSizes)
+
+    // // CALCULATE VERTICAL POSITION
+    // let centerYPointPixels = ''
+    // if (landscapeOrientation) {
+    //   centerYPointPixels = rooms[activeRoomIndex].verticalCenter * containerHeight
+    // } else {
+    //   centerYPointPixels = rooms[activeRoomIndex].portraitVerticalCenter * containerHeight
+    // }
+    // const newTop = centerYPointPixels - resizedArray[0] * 0.5
+    // setwallSizes()
   }
 
   const handleResize = () => {
@@ -79,6 +112,7 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
         <div className="product-image-nav">
           {thumbnails.map((value, index) => (
             <div
+              id={`thumbnail-${value}`}
               key={index}
               className={`thumbnail thumbnail-${value} ${value} ${
                 activeThumbnailIndex === index ? 'active' : ''
@@ -123,7 +157,6 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
             wallStyles={wallSizes}
             rotateImage={activeThumbnailIndex === 1}
             onWall={activeThumbnailIndex === 2}
-            thumbnailIndex={'end end end end end'}
           />
         </div>
       </div>

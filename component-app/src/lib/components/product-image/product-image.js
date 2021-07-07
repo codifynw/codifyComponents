@@ -28,16 +28,12 @@ export const ProductImage = ({
   ...props
 }) => {
   const determineTransform = function () {
-    console.log('rotateImage: ', rotateImage)
     if (onWall) {
-      console.log('I return initial')
       return 'initial'
     }
     if (rotateImage) {
-      console.log('I return rotate image')
       return 'translate(-36%, -50%) rotateY(43deg) scale3d(1, 1, 1)'
     }
-    console.log('I RETURN 5050')
     return 'translate(-50%, -50%)'
   }
 
