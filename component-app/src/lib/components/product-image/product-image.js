@@ -25,6 +25,7 @@ export const ProductImage = ({
   onWall,
   wallStyles,
   thumbnailIndex,
+  onThumbnailWall,
   ...props
 }) => {
   const determineTransform = function () {
@@ -39,14 +40,20 @@ export const ProductImage = ({
 
   const determineWidth = function () {
     if (onWall) {
-      return wallStyles.width + 'px'
+      return wallStyles.room?.width + 'px'
+    }
+    if (onThumbnailWall) {
+      return wallStyles.thumbnail?.width + 'px'
     }
     return '50%'
   }
 
   const determineHeight = function () {
     if (onWall) {
-      return wallStyles.height + 'px'
+      return wallStyles.room?.height + 'px'
+    }
+    if (onThumbnailWall) {
+      return wallStyles.thumbnail?.height + 'px'
     }
     return '50%'
   }

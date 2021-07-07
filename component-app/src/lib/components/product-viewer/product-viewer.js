@@ -60,19 +60,26 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
       product.media[0]?.preview_image?.width > product.media[0]?.preview_image?.height
     let viewers = generateViewers()
 
-    // PERCENT OF PHOTO OCCUPIED BY OBJECT WITh KNOWN MEASUREMENT
+    // PERCENT OF PHOTO OCCUPIED BY OBJECT WITH KNOWN MEASUREMENT
     // IF A BED IS 60 IN. AND TAKES UP 60% OF THE PHOTO, WE KNOW
     // THE PHOTO LENGTH SPANS 100 INCHES
     const scalePercent = rooms[activeRoomIndex].scalePercent
 
     viewers.map((viewer, index) => {
-      const scaledPixels = viewer.container.width * scalePercent
-      const PPI = scaledPixels / rooms[activeRoomIndex].scaleInches
-      const resizedArray = [viewer.container.height * PPI, viewer.container.width * PPI]
+      //   const containerInchesWidth = (1 / scalePercent) * rooms[activeRoomIndex].scaleInches
+
+      const scaleConversionRatio = viewer.container.width * scalePercent
+      const PPI = scaleConversionRatio / rooms[activeRoomIndex].scaleInches
+      const resizedArray = [height * PPI, width * PPI]
 
       setwallSizes((prevState) => ({
         ...prevState,
-        [viewer.name]: { height: resizedArray[0], width: resizedArray[1], top: '20' },
+        [viewer.name]: {
+          height: resizedArray[0],
+          width: resizedArray[1],
+          top: '20',
+          scaleConversionRatio: scaleConversionRatio,
+        },
       }))
     })
 
@@ -123,7 +130,7 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
               onClick={() => onThumbnailSelect(index)} // pass the index
             >
               <ProductImage
-                onWall={value === 'wall'}
+                onThumbnailWall={value === 'wall'}
                 wallSizes={wallSizes}
                 featured_image={product.featured_image}
                 wallStyles={wallSizes}
