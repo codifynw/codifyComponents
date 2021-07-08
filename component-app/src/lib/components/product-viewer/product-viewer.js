@@ -37,6 +37,22 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
   const [size, setsize] = useState('0x0')
   const [wallSizes, setwallSizes] = useState([])
 
+  useEffect(() => {
+    calculateWallSizes(size)
+  }, [size])
+
+  useEffect(() => {
+    calculateWallSizes(size)
+  }, [activeRoomIndex])
+
+  //   useEffect(() => {
+  //     window.addEventListener('resize', handleResize)
+  //   }, [])
+
+  //   if (!product.media[0]?.preview_image) {
+  //     return <div>Upload at least one image of the product to activate.</div>
+  //   }
+
   function onOptionSelect(event) {
     const { name, value } = event.target
     if (name.toLowerCase() === 'size') {
@@ -72,46 +88,40 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
       const PPI = scaleConversionRatio / rooms[activeRoomIndex].scaleInches
       const resizedArray = [height * PPI, width * PPI]
 
+      // CALCULATE VERTICAL POSITION
+      let centerYPointPixels = ''
+      if (isLandscapeOrientation) {
+        centerYPointPixels = rooms[activeRoomIndex].verticalCenter * viewer.container.height
+      } else {
+        centerYPointPixels = rooms[activeRoomIndex].portraitVerticalCenter * viewer.container.height
+      }
+      const newTop = centerYPointPixels - resizedArray[0] * 0.5
+      const newLeft = rooms[activeRoomIndex].horizontalCenter
+
       setwallSizes((prevState) => ({
         ...prevState,
         [viewer.name]: {
           height: resizedArray[0],
           width: resizedArray[1],
-          top: '20',
+          top: newTop,
+          left: newLeft,
           scaleConversionRatio: scaleConversionRatio,
+          baseimgWidthPx: viewer.container.width * 0.8,
+          baseimgHeightPx:
+            (viewer.width * 0.8 * product.media[0]?.preview_image.height) /
+            product.media[0]?.preview_image.width,
         },
       }))
     })
-
-    console.log('wallSizes: ', wallSizes)
-
-    // // CALCULATE VERTICAL POSITION
-    // let centerYPointPixels = ''
-    // if (landscapeOrientation) {
-    //   centerYPointPixels = rooms[activeRoomIndex].verticalCenter * containerHeight
-    // } else {
-    //   centerYPointPixels = rooms[activeRoomIndex].portraitVerticalCenter * containerHeight
-    // }
-    // const newTop = centerYPointPixels - resizedArray[0] * 0.5
-    // setwallSizes()
   }
 
-  const handleResize = () => {
-    setwindowWidth(window.innerWidth)
-  }
+  //   const handleResize = () => {
+  //     setwindowWidth(window.innerWidth)
+  //   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log('You clicked submit.')
   }
-
-  useEffect(() => {
-    calculateWallSizes(size)
-  }, [size])
-
-  useEffect(() => {
-    window.addEventListener('resize', handleResize)
-  }, [])
 
   return (
     <section className={['product-viewer'].join(' ')} {...props}>
@@ -131,10 +141,11 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
             >
               <ProductImage
                 onThumbnailWall={value === 'wall'}
-                wallSizes={wallSizes}
+                measurements={wallSizes}
+                rotateImage={value === 'details'}
                 featured_image={product.featured_image}
-                wallStyles={wallSizes}
                 thumbnailIndex={value}
+                containerType="thumbnail"
               />
             </div>
           ))}
@@ -161,9 +172,10 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
           </select>
           <ProductImage
             featured_image={product.featured_image}
-            wallStyles={wallSizes}
+            measurements={wallSizes}
             rotateImage={activeThumbnailIndex === 1}
             onWall={activeThumbnailIndex === 2}
+            containerType="room"
           />
         </div>
       </div>

@@ -1280,24 +1280,25 @@ const currentProduct = {
 }
 
 const rooms = [
-  // {
-  //   title: 'bedroom',
-  //   defaultHeight: 720,
-  //   defaultWidth: 1080,
-  //   defaultRatio: 1.5,
-  //   verticalCenter: 0.2,
-  //   portraitVerticalCenter: 0.2,
-  //   horizontalCenter: 40,
-  //   scaleInches: 76,
-  //   scalePercent: 0.4,
-  //   url: '//cdn.shopify.com/shopifycloud/shopify/assets/no-image-2048-5e88c1b20e087fb7bbe9a3771824e743c244f437e4f8ba93bbf7b11b53f7824c.gif',
-  // },
+  {
+    title: 'bedroom',
+    defaultHeight: 720,
+    defaultWidth: 1080,
+    defaultRatio: 1.5,
+    verticalCenter: 0.2,
+    portraitVerticalCenter: 0.2,
+    horizontalCenter: 40,
+    scaleInches: 60,
+    scalePercent: 0.7,
+    url:
+      '//cdn.shopify.com/shopifycloud/shopify/assets/no-image-2048-5e88c1b20e087fb7bbe9a3771824e743c244f437e4f8ba93bbf7b11b53f7824c.gif',
+  },
   {
     title: 'living',
     defaultHeight: 2000,
     defaultWidth: 3000,
     defaultRatio: 1.5,
-    verticalCenter: 0.4,
+    verticalCenter: 0.35,
     portraitVerticalCenter: 0.3,
     horizontalCenter: 50,
     scaleInches: 76,
