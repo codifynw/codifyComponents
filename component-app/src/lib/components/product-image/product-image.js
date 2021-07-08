@@ -8,8 +8,6 @@ const Image = styled.div`
   height: ${(props) => props.heightValue};
   top: ${(props) => props.topValue};
   left: ${(props) => props.leftValue};
-
-  left: ${(props) => (props.left ? props.left : '50%')};
   background-image: url(${(props) => props.featured_image});
   transition: transform 0s ease, all 0.4s ease;
 
@@ -45,7 +43,7 @@ export const ProductImage = ({
     if (onThumbnailWall) {
       return measurements.thumbnail?.height + 'px'
     }
-    return '50%'
+    return measurements[containerType]?.baseimgHeightPx + 'px'
   }
 
   const determineWidth = function () {

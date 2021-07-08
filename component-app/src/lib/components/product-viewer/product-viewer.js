@@ -86,15 +86,28 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
 
       const scaleConversionRatio = viewer.container.width * scalePercent
       const PPI = scaleConversionRatio / rooms[activeRoomIndex].scaleInches
-      const resizedArray = [height * PPI, width * PPI]
+      let resizedArray = []
+      let baseWidth
+      let baseHeight
 
       // CALCULATE VERTICAL POSITION
       let centerYPointPixels = ''
       if (isLandscapeOrientation) {
+        resizedArray = [height * PPI, width * PPI]
         centerYPointPixels = rooms[activeRoomIndex].verticalCenter * viewer.container.height
+        baseWidth = viewer.container.width * 0.8
+        baseHeight =
+          (viewer.container.width * 0.8 * product.media[0]?.preview_image.height) /
+          product.media[0]?.preview_image.width
       } else {
+        resizedArray = [width * PPI, height * PPI]
         centerYPointPixels = rooms[activeRoomIndex].portraitVerticalCenter * viewer.container.height
+        baseWidth =
+          (viewer.container.height * 0.8 * product.media[0]?.preview_image.width) /
+          product.media[0]?.preview_image.height
+        baseHeight = viewer.container.height * 0.8
       }
+
       const newTop = centerYPointPixels - resizedArray[0] * 0.5
       const newLeft = rooms[activeRoomIndex].horizontalCenter
 
@@ -106,10 +119,8 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
           top: newTop,
           left: newLeft,
           scaleConversionRatio: scaleConversionRatio,
-          baseimgWidthPx: viewer.container.width * 0.8,
-          baseimgHeightPx:
-            (viewer.width * 0.8 * product.media[0]?.preview_image.height) /
-            product.media[0]?.preview_image.width,
+          baseimgWidthPx: baseWidth,
+          baseimgHeightPx: baseHeight,
         },
       }))
     })
