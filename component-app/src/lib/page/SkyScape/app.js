@@ -9,10 +9,7 @@ let scene,
   cloudGeo,
   cloudMaterial,
   cloudParticles = [],
-  flash,
-  rain,
-  rainGeo,
-  rainCount = 15000
+  flash
 
 function init() {
   scene = new THREE.Scene()
@@ -45,26 +42,6 @@ function init() {
   //   APPEND
   document.body.appendChild(renderer.domElement)
 
-  //   RAIN
-  // rainGeo = new THREE.Geometry()
-  // for (let i = 0; i < rainCount; i++) {
-  //   rainDrop = new THREE.Vector3(
-  //     Math.random() * 400 - 200,
-  //     Math.random() * 500 - 250,
-  //     Math.random() * 400 - 200
-  //   )
-  //   rainDrop.velocity = {}
-  //   rainDrop.velocity = 0
-  //   rainGeo.vertices.push(rainDrop)
-  // }
-  // rainMaterial = new THREE.PointsMaterial({
-  //   color: 0xaaaaaa,
-  //   size: 0.1,
-  //   transparent: true,
-  // })
-  // rain = new THREE.Points(rainGeo, rainMaterial)
-  // scene.add(rain)
-
   //   CLOUDS
   let loader = new THREE.TextureLoader()
   loader.load('/img/smoke.png', function (texture) {
@@ -92,17 +69,6 @@ function animate() {
   cloudParticles.forEach((p) => {
     p.rotation.z -= 0.002
   })
-
-  // rainGeo.vertices.forEach((p) => {
-  //   p.velocity -= 0.1 + Math.random() * 0.1
-  //   p.y += p.velocity
-  //   if (p.y < -200) {
-  //     p.y = 200
-  //     p.velocity = 0
-  //   }
-  // })
-  // rainGeo.verticesNeedUpdate = true
-  // rain.rotation.y += 0.002
 
   if (Math.random() > 0.93 || flash.power > 100) {
     if (flash.power < 100) flash.position.set(Math.random() * 400, 300 + Math.random() * 200, 100)
