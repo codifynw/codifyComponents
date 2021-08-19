@@ -10,6 +10,8 @@
 
 # production
 /build
+__dist
+wp__dist
 
 # misc
 .DS_Store
