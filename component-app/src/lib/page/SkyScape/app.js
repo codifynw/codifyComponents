@@ -49,6 +49,7 @@ function init() {
   controls = new OrbitControls(camera, canvas)
   controls.target.set(0, 2, -2)
   controls.enableDamping = true
+  document.documentElement.className += ' controls-added'
 
   //   CLOUDS
   let loader = new THREE.TextureLoader()

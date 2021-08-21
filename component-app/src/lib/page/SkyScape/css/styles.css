@@ -21,7 +21,7 @@ body {
 }
 
 #canvas {
-  z-index: 100;
+  z-index: 1;
 }
 
 #app {
@@ -30,6 +30,11 @@ body {
   height: 100%;
   text-align: center;
   visibility: hidden;
+  z-index: 2;
+}
+
+html.controls-added #app {
+  pointer-events: none;
 }
 
 #landing {
