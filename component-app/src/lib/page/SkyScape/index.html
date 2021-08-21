@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="is-ready">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,47 @@
     <body>
         <canvas id="canvas"></canvas>
         <div id="app">
-            <div class="main"></div>
+            <div class="main">
+                <section id="landing">
+                    <div id="land-cta">
+                        <h1>SKY<span class="bolden">SCAPE</span></h1>
+                    </div>
+                    <div id="main-scroll-indicator" style="opacity: 1;"> 
+                        <div id="main-scroll-indicator-text">Scroll to see more</div> 
+                        <div id="main-scroll-indicator-arrow-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="5" fill="#fff" height="40" viewBox="0 0 5 40"><title>Vector Smart Object</title><path d="M0,40V0H1V35H5Z"></path></svg>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div id="tour-list">
+                        <div class="card">
+                            <div class="card-image" ></div>
+                            <div class="card-text">
+                              <span class="date">4 days ago</span>
+                              <h2>Post One</h2>
+                              <p>Lorem ipsum dolor sit demoise amet consectetur, Ducimusele, repudiandae temporibus omnis illum maxime quod deserunt eligendi dolor</p>
+                            </div>
+                          </div>
+                          <div class="card rgb">
+                            <div class="card-image card2"></div>
+                            <div class="card-text card2">
+                              <span class="date">1 week ago</span>
+                              <h2>Post Two</h2>
+                              <p>Adipisicing elit. Ducimus, repudiandae corrupti tialeno des ameto temporibus omnis provident illum maxime quod. Lorem ipsum dolor</p>
+                            </div>
+                          </div>
+                          <div class="card">
+                              <div class="card-image card3"></div>
+                              <div class="card-text card3">
+                                <span class="date">3 week ago</span>
+                                <h2>Post Three</h2>
+                                <p>Repudiandae repudiandae de corrupti amet temporibus omnis si provident illum maxime. Ducimus, lorem ipsum dolor adipisicing elit</p>
+                              </div>
+                          </div>                        
+                    </div>
+                </section>
+            </div>
             <div class="main-scrollbar"></div>
             <div class="menu"></div>
         </div>
@@ -25,15 +65,6 @@
                     <li class="header-menu-item header-item is-home"><a aria-label="home" href="/" data-has-parsed="true"><div class="header-menu-item-mask">Home</div></a></li> 
                 </ul> 
             </div>
-        </header>        
-        <div id="land-cta">
-            <h1>SKY<span class="bolden">SCAPE</span></h1>
-        </div>
-        <div id="main-scroll-indicator" style="opacity: 1;"> 
-            <div id="main-scroll-indicator-text">Scroll to see more</div> 
-            <div id="main-scroll-indicator-arrow-container">
-                <svg xmlns="http://www.w3.org/2000/svg" width="5" fill="#fff" height="40" viewBox="0 0 5 40"><title>Vector Smart Object</title><path d="M0,40V0H1V35H5Z"></path></svg>
-            </div>
-        </div>        
+        </header>            
     </body>
 </html>
