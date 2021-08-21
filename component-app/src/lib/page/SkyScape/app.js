@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import './reset.css'
 import './styles.css'
 
 let scene,
@@ -34,13 +35,11 @@ function init() {
   scene.add(flash)
 
   //   RENDER
-  renderer = new THREE.WebGLRenderer()
+  var myCanvas = document.getElementById('canvas')
+  renderer = new THREE.WebGLRenderer({ antialias: true, canvas: myCanvas })
   scene.fog = new THREE.FogExp2(0x11111f, 0.002)
   renderer.setClearColor(scene.fog.color)
   renderer.setSize(window.innerWidth, window.innerHeight)
-
-  //   APPEND
-  document.body.appendChild(renderer.domElement)
 
   //   CLOUDS
   let loader = new THREE.TextureLoader()
