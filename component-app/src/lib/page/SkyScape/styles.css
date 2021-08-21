@@ -44,7 +44,7 @@ html.is-ready #app {
 }
 
 .bolden {
-  font-weight: 900;
+  font-weight: bold;
 }
 
 #main-scroll-indicator {
@@ -109,7 +109,14 @@ html.is-ready #app {
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  padding-left: 60px;
   padding-right: 60px;
+}
+
+#header-logo {
+  font-size: 16px;
+  color: white;
+  font-weight: lighter;
 }
 
 #header a {

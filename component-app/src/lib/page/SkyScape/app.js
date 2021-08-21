@@ -69,7 +69,7 @@ function animate() {
     p.rotation.z -= 0.002
   })
 
-  if (Math.random() > 0.93 || flash.power > 100) {
+  if (Math.random() > 0.98 || flash.power > 100) {
     if (flash.power < 100) flash.position.set(Math.random() * 400, 300 + Math.random() * 200, 100)
     flash.power = 50 + Math.random() * 500
   }
