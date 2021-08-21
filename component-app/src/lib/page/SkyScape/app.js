@@ -1,6 +1,8 @@
 import * as THREE from 'three'
-import './reset.css'
-import './styles.css'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import './css/reset.css'
+import './css/styles.css'
+import './css/tour-list.css'
 
 let scene,
   ambient,
@@ -61,6 +63,25 @@ function init() {
     }
     animate()
   })
+
+  // MAN
+  const gltfLoader = new GLTFLoader()
+
+  gltfLoader.load(
+    '/models/man/scene.gltf',
+    (gltf) => {
+      console.log('success', gltf)
+      // for (const child of gltf.scene.children) {
+      //   scene.add(child)
+      // }
+    },
+    () => {
+      console.log('2')
+    },
+    () => {
+      console.log('3')
+    }
+  )
 }
 
 // ANIMATE
