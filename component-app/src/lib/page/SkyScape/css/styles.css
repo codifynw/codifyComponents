@@ -20,6 +20,10 @@ body {
   position: fixed;
 }
 
+#canvas {
+  z-index: 100;
+}
+
 #app {
   position: relative;
   width: 100%;

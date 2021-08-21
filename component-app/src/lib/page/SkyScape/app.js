@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import './css/reset.css'
 import './css/styles.css'
 import './css/tour-list.css'
@@ -12,7 +13,8 @@ let scene,
   cloudGeo,
   cloudMaterial,
   cloudParticles = [],
-  flash
+  flash,
+  controls
 
 function init() {
   scene = new THREE.Scene()
@@ -37,11 +39,16 @@ function init() {
   scene.add(flash)
 
   //   RENDER
-  var myCanvas = document.getElementById('canvas')
-  renderer = new THREE.WebGLRenderer({ antialias: true, canvas: myCanvas })
+  var canvas = document.getElementById('canvas')
+  renderer = new THREE.WebGLRenderer({ antialias: true, canvas: canvas })
   scene.fog = new THREE.FogExp2(0x11111f, 0.002)
   renderer.setClearColor(scene.fog.color)
   renderer.setSize(window.innerWidth, window.innerHeight)
+
+  // Controls
+  controls = new OrbitControls(camera, canvas)
+  controls.target.set(0, 2, -2)
+  controls.enableDamping = true
 
   //   CLOUDS
   let loader = new THREE.TextureLoader()
@@ -71,8 +78,27 @@ function init() {
     '/models/man/scene.gltf',
     (gltf) => {
       console.log('success', gltf)
-      // for (const child of gltf.scene.children) {
+      // ADD SCENE
+
+      var model = gltf.scene
+      var newMaterial = new THREE.MeshStandardMaterial({ color: 0x909090 })
+      model.traverse((o) => {
+        if (o.isMesh) o.material = newMaterial
+      })
+      model.rotateY(Math.PI)
+
+      model.scale.set(0.2, 0.2, 0.2)
+      scene.add(model)
+
+      // ONE WAY
+      // const children = [...gltf.scene.children]
+      // for (const child of children) {
       //   scene.add(child)
+      // }
+
+      // ANOTHER WAY
+      // while (gltf.scene.children.length) {
+      //   scene.add(gltf.scene.children[0])
       // }
     },
     () => {
@@ -82,18 +108,30 @@ function init() {
       console.log('3')
     }
   )
+
+  // change colors of meshes
+  // root.traverse((object) => {
+  //   if (object.isMesh) {
+  //     object.material.color.set(0xffffff * Math.random())
+  //   }
+  // })
 }
 
 // ANIMATE
 function animate() {
+  // Update controls
+  controls.update()
+
+  // Update Storm
   cloudParticles.forEach((p) => {
     p.rotation.z -= 0.002
   })
 
-  if (Math.random() > 0.98 || flash.power > 100) {
+  if (Math.random() > 0.93 || flash.power > 100) {
     if (flash.power < 100) flash.position.set(Math.random() * 400, 300 + Math.random() * 200, 100)
     flash.power = 50 + Math.random() * 500
   }
+
   renderer.render(scene, camera)
   requestAnimationFrame(animate)
 }
