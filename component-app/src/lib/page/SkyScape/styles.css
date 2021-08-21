@@ -4,4 +4,126 @@ body {
   margin: 0;
   background: black;
   overflow: hidden;
+  font-family: 'Montserrat';
+  font-size: 22px;
+}
+
+body {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+#canvas {
+  position: fixed;
+}
+
+#app {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  visibility: hidden;
+}
+
+html.is-ready #app {
+  visibility: visible;
+}
+
+/* SKYSCAPE */
+#land-cta {
+  font-weight: lighter;
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 4em;
+  transform: translate(-50%, -50%);
+}
+
+.bolden {
+  font-weight: 900;
+}
+
+#main-scroll-indicator {
+  position: absolute;
+  color: white;
+  left: 60px;
+  bottom: 30px;
+  margin-bottom: 30px;
+  will-change: opacity;
+  pointer-events: none;
+}
+
+#main-scroll-indicator-text {
+  position: absolute;
+  left: -4px;
+  bottom: 50px;
+  white-space: nowrap;
+  transform-origin: 0 0;
+  transform: rotate(-90deg);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+#main-scroll-indicator-arrow-container {
+  width: 5px;
+  height: 40px;
+  overflow: hidden;
+}
+#main-scroll-indicator-arrow-container svg {
+  animation-name: main-scroll-indicator-arrow;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+@keyframes main-scroll-indicator-arrow {
+  0% {
+    transform: translate3d(0, -100%, 0);
+  }
+  15% {
+    transform: translate3d(0, 0, 0);
+  }
+  85% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+@media (max-width: 1280px) {
+  #main-scroll-indicator {
+    display: none;
+  }
+}
+
+#header {
+  position: absolute;
+  top: 60px;
+  width: 100%;
+  z-index: 2500;
+  vertical-align: bottom;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding-right: 60px;
+}
+
+#header a {
+  color: white;
+}
+
+#header-menu {
+  float: right;
+  margin: 0 0;
+  padding: 0 0;
+  text-align: center;
+}
+
+li.header-menu-item {
+  float: right;
+  margin: 0 0.4vw;
 }
