@@ -14,7 +14,7 @@ let scene,
   cloudMaterial,
   cloudParticles = [],
   flash,
-  controls
+  controls = true
 
 function init() {
   scene = new THREE.Scene()
@@ -46,10 +46,12 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight)
 
   // Controls
-  controls = new OrbitControls(camera, canvas)
-  controls.target.set(0, 2, -2)
-  controls.enableDamping = true
-  document.documentElement.className += ' controls-added'
+  if (controls) {
+    controls = new OrbitControls(camera, canvas)
+    controls.target.set(0, 2, -2)
+    controls.enableDamping = true
+    document.documentElement.className += ' controls-added'
+  }
 
   //   CLOUDS
   let loader = new THREE.TextureLoader()
@@ -121,7 +123,9 @@ function init() {
 // ANIMATE
 function animate() {
   // Update controls
-  controls.update()
+  if (controls !== false) {
+    controls.update()
+  }
 
   // Update Storm
   cloudParticles.forEach((p) => {
