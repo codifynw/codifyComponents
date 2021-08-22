@@ -14,7 +14,7 @@ let scene,
   cloudMaterial,
   cloudParticles = [],
   flash,
-  controls = true
+  controls = false
 
 function init() {
   scene = new THREE.Scene()
