@@ -1,0 +1,22 @@
+#main-scroll-area {
+  position: absolute;
+  width: 100%;
+  will-change: transform;
+}
+
+#main-scrollbar-indicator {
+  position: absolute;
+  width: 100%;
+  background-color: #fff;
+}
+
+#main-scrollbar {
+  position: absolute;
+  right: 8px;
+  top: 16px;
+  width: 2px;
+  bottom: 16px;
+  background-color: rgba(127, 127, 127, 0.255);
+  z-index: 1500;
+  mix-blend-mode: difference;
+}

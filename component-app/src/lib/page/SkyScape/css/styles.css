@@ -1,3 +1,7 @@
+@import url('./global.css');
+@import url(./header.css);
+@import url(./scroll.css);
+
 body {
   width: 100vw;
   height: 100vh;
@@ -58,10 +62,6 @@ html.is-ready #app {
   transform: translate(-50%, -50%);
 }
 
-.bolden {
-  font-weight: bold;
-}
-
 #main-scroll-indicator {
   position: absolute;
   color: white;
@@ -113,68 +113,4 @@ html.is-ready #app {
   #main-scroll-indicator {
     display: none;
   }
-}
-
-#header {
-  position: absolute;
-  top: 60px;
-  width: 100%;
-  z-index: 2500;
-  vertical-align: bottom;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  padding-left: 60px;
-  padding-right: 60px;
-}
-
-#header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-#header-logo {
-  font-size: 16px;
-  color: white;
-  font-weight: lighter;
-}
-
-#header a {
-  color: white;
-}
-
-#header-menu {
-  float: right;
-  margin: 0 0;
-  padding: 0 0;
-  text-align: center;
-}
-
-li.header-menu-item {
-  float: right;
-  margin: 0 0.4vw;
-}
-
-#main-scroll-area {
-  position: absolute;
-  width: 100%;
-  will-change: transform;
-}
-
-#main-scrollbar-indicator {
-  position: absolute;
-  width: 100%;
-  background-color: #fff;
-}
-
-#main-scrollbar {
-  position: absolute;
-  right: 8px;
-  top: 16px;
-  width: 2px;
-  bottom: 16px;
-  background-color: rgba(127, 127, 127, 0.255);
-  z-index: 1500;
-  mix-blend-mode: difference;
 }

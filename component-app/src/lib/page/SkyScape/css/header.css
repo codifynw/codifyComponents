@@ -1,0 +1,40 @@
+#header {
+  position: absolute;
+  top: 60px;
+  width: 100%;
+  z-index: 2500;
+  vertical-align: bottom;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding-left: 60px;
+  padding-right: 60px;
+}
+
+#header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#header-logo {
+  font-size: 16px;
+  color: white;
+  font-weight: lighter;
+}
+
+#header a {
+  color: white;
+}
+
+#header-menu {
+  float: right;
+  margin: 0 0;
+  padding: 0 0;
+  text-align: center;
+}
+
+li.header-menu-item {
+  float: right;
+  margin: 0 0.4vw;
+}
