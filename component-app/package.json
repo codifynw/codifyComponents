@@ -93,6 +93,7 @@
     "url": "git+https://github.com/codifynw/codifyComponents"
   },
   "dependencies": {
+    "swiper": "^6.8.3",
     "three": "^0.131.3"
   }
 }
