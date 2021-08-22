@@ -1,52 +1,83 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import './slider.scss'
+import React, { useState, useEffect, useCallback } from 'react'
+import ReactDOM from 'react-dom'
+import Swiper from './swiper'
+import { Lazy } from 'swiper/dist/js/swiper.esm'
+import SlideItem from './slideItem'
 
-/**
- * Grid to show galleries
- */
-export const Slider = ({ classList, items, ...props }) => {
-  //   const mode = primary
-  //     ? 'storybook-button--primary'
-  //     : 'storybook-button--secondary'
+export default ({ items }) => {
+  // Swiper instance
+  const [swiper, updateSwiper] = useState(null)
+  // Slides current index
+  const [currentIndex, updateCurrentIndex] = useState(0)
+  // Params definition
+  const params = {
+    modules: [Lazy],
+    lazy: true,
+    initialSlide: 0,
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'bullets',
+      clickable: true,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    slidesPerView: 4,
+    centeredSlides: true,
+    spaceBetween: 30,
+    loop: true,
+    autoplay: false,
+    getSwiper: updateSwiper, // Get swiper instance callback
+  }
+
+  // Manipulate swiper from outside
+  const goNext = () => {
+    if (swiper !== null) {
+      swiper.slideNext()
+    }
+  }
+
+  const goPrev = () => {
+    if (swiper !== null) {
+      swiper.slidePrev()
+    }
+  }
+
+  const renderItem = useCallback(
+    ({ idx, color, content }) => (
+      <SlideItem color={color} content={content} key={`slide_${idx}`}>
+        <img class="swiper-lazy" data-src={`https://picsum.photos/100/100?random=${idx}`} alt="" />
+      </SlideItem>
+    ),
+    []
+  )
+
+  const updateIndex = useCallback(() => updateCurrentIndex(swiper.realIndex), [swiper])
+
+  // Add eventlisteners for swiper after initializing
+  useEffect(() => {
+    if (swiper !== null) {
+      swiper.on('slideChange', updateIndex)
+    }
+
+    return () => {
+      if (swiper !== null) {
+        swiper.off('slideChange', updateIndex)
+      }
+    }
+  }, [swiper, updateIndex])
+
   return (
-    <div className={['simple-slider ', classList].join(' ')} {...props}>
-      {items.map((value, index) => {
-        // var sectionStyle = {
-        //   backgroundImage: "url(" + {value.imgPath} + ")"
-        // };
-
-        return (
-          <div
-            className="grid-item"
-            key={index}
-            style={{ backgroundImage: 'url(' + value.imgPath + ')' }}
-          >
-            {value.title}
-          </div>
-        )
-      })}
+    <div>
+      <Swiper params={params}>{items.map(renderItem)}</Swiper>
+      <div>
+        <button onClick={goPrev}>Prev</button>
+        <button onClick={goNext}>Next</button>
+      </div>
+      <div>
+        Current slide index is <div>{currentIndex}</div>
+      </div>
     </div>
   )
-}
-
-Slider.propTypes = {
-  /**
-   * Classes to add to the div
-   */
-  classList: PropTypes.string,
-
-  /**
-   * Optional click handler
-   */
-  onClick: PropTypes.func,
-
-  /**
-   * Items to be included in the slider
-   */
-  items: PropTypes.array,
-}
-
-Slider.defaultProps = {
-  onClick: undefined,
 }
