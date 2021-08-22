@@ -12,7 +12,14 @@ import SwiperCore, { Pagination } from 'swiper/core'
 // install Swiper modules
 SwiperCore.use([Pagination])
 
-export default function SimpleSwiper(products) {
+// let prepareProducts = function (products) {
+//     for ()
+
+//     return filteredProducts
+// }
+
+export default function SimpleSwiper(props) {
+  let products = props.products
   return (
     <>
       <Swiper
@@ -23,18 +30,9 @@ export default function SimpleSwiper(products) {
         }}
         className="mySwiper"
       >
-        <SwiperSlide>
-          Slide 1 Slide 1 Slide 1 Slide 1 Slide 1 Slide 1 Slide 1 Slide 1 Slide 1 Slide 1 Slide 1
-          Slide 1 Slide 1 Slide 1 Slide 1 Slide 1
-        </SwiperSlide>
-        <SwiperSlide>
-          Slide 1 Slide 1 Slide 1 Slide 1 Slide 1 Slide 1 Slide 1 Slide 1 Slide 1 Slide 1 Slide 1
-          Slide 1 Slide 1 Slide 1 Slide 1 Slide 1
-        </SwiperSlide>
-        <SwiperSlide>
-          Slide 1 Slide 1 Slide 1 Slide 1 Slide 1 Slide 1 Slide 1 Slide 1 Slide 1 Slide 1 Slide 1
-          Slide 1 Slide 1 Slide 1 Slide 1 Slide 1
-        </SwiperSlide>
+        {products.map((product, index) => {
+          return <SwiperSlide>{product.title}</SwiperSlide>
+        })}
       </Swiper>
     </>
   )
