@@ -77,9 +77,7 @@ function initThree() {
   gltfLoader.load(
     '/models/man/scene.gltf',
     (gltf) => {
-      console.log('success', gltf)
       // ADD SCENE
-
       var model = gltf.scene
       var newMaterial = new THREE.MeshStandardMaterial({ color: 0x909090 })
       model.traverse((o) => {
