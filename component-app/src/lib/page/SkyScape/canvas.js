@@ -2,6 +2,32 @@ import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
+var particleOptions = {
+  particleCount: 1000,
+  deltaTime: 500,
+  betaX: 0.0,
+  betaY: 0.01,
+  betaZ: 0.0,
+  GX: 0.0,
+  GY: 0.001,
+  GZ: 0.0,
+  gravity: 0.01,
+  betaLiftChaos: 10,
+  height: 750,
+  heightChaos: 250,
+  tornadoFactor: 25,
+  instantRespawn: false,
+  tracer: false,
+}
+
+function getUrlVars() {
+  var vars = {}
+  var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+    vars[key] = value
+  })
+  return vars
+}
+
 let scene,
   ambient,
   camera,
@@ -11,7 +37,7 @@ let scene,
   cloudMaterial,
   cloudParticles = [],
   flash,
-  controls = false
+  controls = true
 
 function initThree() {
   scene = new THREE.Scene()
@@ -82,7 +108,6 @@ function initThree() {
 
   // MAN
   const gltfLoader = new GLTFLoader()
-
   gltfLoader.load(
     '/models/man/scene.gltf',
     (gltf) => {
@@ -126,12 +151,70 @@ function initThree() {
   floor.position.y = 0
   scene.add(floor)
 
+  // TORNADO
+  // TORNADO
+  // TORNADO
+  var particles = []
+  var mesh
+  //global physics properties
+  var B = new THREE.Vector3(0, 0.01, 0) //magnetic field
+  var G = new THREE.Vector3(0.0, -0.001, 0.0)
+  var Gravity = new THREE.Vector3(0.0, 0.01, 0.0)
+
+  //particle properties
+  var S = new THREE.Vector3(100, 0, 100) //position
+  var V = new THREE.Vector3(0.0, 0.1, 0.1) //velocity
+  var M = 1 //mass
+  var mesh_falling = false
+  var mesh_raising = true
+  var mesh_height = 5
+  //   var tornadoTexture
+  //   var tornadoGeometry
+  var tornadoMaterial
+
+  var deviceOrientation = false
+
+  var windowHalfX = window.innerWidth / 2
+  var windowHalfY = window.innerHeight / 2
+
+  var shaderSelection = 4
+  var uniforms1, uniforms2
+
+  var deviceOrientationFieldParam = getUrlVars()['deviceOrientation']
+  if (
+    typeof deviceOrientationFieldParam !== 'undefined' &&
+    deviceOrientationFieldParam != 'undefined'
+  ) {
+    deviceOrientation = true
+  }
+
   // change colors of meshes
   // root.traverse((object) => {
   //   if (object.isMesh) {
   //     object.material.color.set(0xffffff * Math.random())
   //   }
   // })
+
+  var gridXZ = new THREE.GridHelper(100, 10)
+  gridXZ.position.set(0, 0, 0)
+  scene.add(gridXZ)
+
+  var gridXY = new THREE.GridHelper(100, 10)
+  gridXY.position.set(0, 0, 0)
+  gridXY.rotation.x = Math.PI / 2
+  scene.add(gridXY)
+
+  var gridYZ = new THREE.GridHelper(100, 10)
+  gridYZ.position.set(0, 0, 0)
+  gridYZ.rotation.z = Math.PI / 2
+  scene.add(gridYZ)
+
+  // direction (normalized), origin, length, color(hex)
+  var origin = new THREE.Vector3(0, 0, 0)
+  var terminus = new THREE.Vector3(B.x, B.y + 100, B.z)
+  var direction = new THREE.Vector3().subVectors(terminus, origin).normalize()
+  var arrow = new THREE.ArrowHelper(direction, origin, 100, 0x884400)
+  scene.add(arrow)
 }
 
 // ANIMATE
