@@ -15,10 +15,11 @@ function lerp(start, end, t) {
 }
 
 function smoothScroll() {
+  console.log('fire when scroll')
   target = window.scrollY
   current = lerp(current, target, ease)
   scrollable.style.transform = `translate3d(0, ${-current}px, 0)`
-  requestAnimationFrame(smoothScroll)
+  //   requestAnimationFrame(smoothScroll)
 }
 
 export { handleScroll }
