@@ -56,7 +56,7 @@ html.is-ready #app {
   font-weight: lighter;
   color: white;
   position: absolute;
-  top: 50%;
+  top: 80%;
   left: 50%;
   font-size: 4em;
   transform: translate(-50%, -50%);
@@ -113,4 +113,26 @@ html.is-ready #app {
   #main-scroll-indicator {
     display: none;
   }
+}
+
+#land-cta-extra {
+  position: absolute;
+  top: 180px;
+  left: 180px;
+  max-width: 600px;
+  color: white;
+  text-align: left;
+  font-size: 26px;
+}
+
+#land-cta-extra h2 {
+  font-size: 60px;
+  margin-bottom: 60px;
+}
+
+.cta-btn {
+  margin-top: 60px;
+  color: white;
+  border: 1px solid;
+  text-align: center;
 }
