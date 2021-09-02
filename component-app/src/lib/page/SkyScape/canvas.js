@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { vertexShader, fragmentShader } from './static/models/shader/fragment_shaderCell.glsl'
 // gl_FragColor = vec4(0.5, 0.294, .2, 1);
 
@@ -40,7 +40,7 @@ let scene,
   cloudMaterial,
   cloudParticles = [],
   flash,
-  controls = true
+  controls = false
 
 // custom global variables
 var lastFrameTime = new Date().getTime() / 1000
@@ -98,8 +98,7 @@ function initThree() {
   scene.add(flash)
 
   //   RENDER
-  var canvas = document.getElementById('canvas')
-  renderer = new THREE.WebGLRenderer({ antialias: true, canvas: canvas })
+  renderer = new THREE.WebGLRenderer({ antialias: true })
   renderer.setSize(window.innerWidth, window.innerHeight)
   //   renderer.setClearColor('#11111f')
   scene.fog = new THREE.FogExp2(0x11111f, 0.002)
@@ -107,10 +106,10 @@ function initThree() {
 
   // Controls
   if (controls) {
-    controls = new OrbitControls(camera, canvas)
+    // controls = new OrbitControls(camera)
     // controls.target.set(0, 2, -2)
-    controls.enableDamping = true
-    document.documentElement.className += ' controls-added'
+    // controls.enableDamping = true
+    // document.documentElement.className += ' controls-added'
   }
 
   // FOG
