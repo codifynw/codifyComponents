@@ -1,11 +1,12 @@
-import * as THREE from '//cdn.skypack.dev/three@0.131.1'
+import * as THREE from './three.js'
 import { GUI } from '//cdn.skypack.dev/three@0.131.1/examples/jsm/libs/dat.gui.module.js'
 import { OrbitControls } from '//cdn.skypack.dev/three@0.131.1/examples/jsm/controls/OrbitControls.js'
-import { RGBELoader } from '//cdn.skypack.dev/three@0.131.1/examples/jsm/loaders/RGBELoader.js'
+import { RGBELoader } from 'https://cdn.skypack.dev/pin/three@v0.131.1-ABR1EJL0AQkCASkHoEad/mode=imports/unoptimized/examples/jsm/loaders/RGBELoader.js'
+
+let heightMapURL = './texture.jpg'
+let displacementMapURL = './displacement.jpg'
 
 const hdriURL = 'https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/empty_warehouse_01_1k.hdr'
-const heightMapURL = 'https://i.imgur.com/oYS135g.jpeg'
-const displacementMapURL = 'https://i.imgur.com/L1pqRg9.jpeg'
 
 createApp({
   params: {
@@ -19,7 +20,8 @@ createApp({
     colorB: '#00ffaa',
   },
   async init() {
-    const geometry = new THREE.SphereGeometry(1, 64, 32)
+    const geometry = new THREE.BoxGeometry(10, 10, 10)
+    // const geometry = new THREE.SphereGeometry(5, 64, 32)
     const material = new THREE.MeshStandardMaterial({ roughness: this.params.roughness })
 
     // Load heightmap and displacement textures
@@ -215,6 +217,7 @@ function createApp(app) {
     height: '100vh',
     background: 'radial-gradient(#eeeeee, #aaaaaa)',
   })
+  console.log('document.body: ', document.body)
   document.body.appendChild(renderer.domElement)
   window.addEventListener(
     'resize',
