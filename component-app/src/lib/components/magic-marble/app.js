@@ -168,7 +168,7 @@ createApp({
       .add(this.params, 'smoothing', 0, 1, 0.01)
       .onChange((v) => (this.uniforms.smoothing.value = v))
     gui
-      .add(this.params, 'displacement', 0, 0.3, 0.001)
+      .add(this.params, 'displacement', 0, 2.0, 0.001)
       .onChange((v) => (this.uniforms.displacement.value = v))
     gui.add(this.params, 'speed', 0, 0.1, 0.001)
     gui.addColor(this.params, 'colorA').onChange((v) => this.uniforms.colorA.value.set(v))
