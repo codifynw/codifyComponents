@@ -5,7 +5,7 @@ const path = require('path')
 
 module.exports = {
   entry: {
-    skyScapers: [path.resolve(__dirname, '../src/lib/page/skyScape/app.js')],
+    skyScapers: [path.resolve(__dirname, '../src/lib/page/shaderToy/app.js')],
   },
   output: {
     filename: 'bundle.[contenthash].js',
@@ -14,10 +14,10 @@ module.exports = {
   devtool: 'source-map',
   plugins: [
     new CopyWebpackPlugin({
-      patterns: [{ from: path.resolve(__dirname, '../src/lib/page/skyScape/static') }],
+      patterns: [{ from: path.resolve(__dirname, '../src/lib/page/shaderToy/static') }],
     }),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, '../src/lib/page/SkyScape/index.html'),
+      template: path.resolve(__dirname, '../src/lib/page/shaderToy/index.html'),
       minify: true,
     }),
     new MiniCSSExtractPlugin(),
