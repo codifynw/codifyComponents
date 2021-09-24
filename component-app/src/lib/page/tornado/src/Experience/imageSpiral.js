@@ -60,27 +60,10 @@ export default class CoffeeSteam {
   }
 
   update() {
-    // console.log('Math.sin(this.time.elapsed * 0.0005): ', Math.sin(this.time.elapsed * 0.0005))
     let sinElapsed = Math.sin(this.time.elapsed * 0.0005)
     // let cosElapsed = Math.cos(this.time.elapsed * 0.0005)
 
     this.plane.rotation.y -= sinElapsed * 0.05
     this.plane.position.y += sinElapsed * 0.05
-
-    // console.log('cosE: ', cosElapsed)
-    // console.log('cosElapsed * this.radius: ', cosElapsed * this.radius)
-
-    // for (const plane of this.plane) {
-    // Steady breath
-    // plane.position.y += sinElapsed * 0.05
-    // plane.rotation.y -= sinElapsed * 0.005
-
-    // plane.position.z += sinElapsed * 0.05
-    // plane.position.x += cosElapsed * 0.05
-    // plane.position.y += cosElapsed * 0.05
-    // plane.position.z += sinElapsed * this.radius
-    // X := originX + ;
-    // Y := originY + sin(angle)*this.radius;
-    // }
   }
 }
