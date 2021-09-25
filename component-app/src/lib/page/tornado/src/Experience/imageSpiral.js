@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import gsap from 'gsap'
 
 import Experience from './Experience.js'
 
@@ -11,6 +12,8 @@ export default class ImageSpiral {
     this.time = this.experience.time
     this.y = 0
     this.position = 0
+    this.mouse = new THREE.Vector2()
+    this.raycaster = new THREE.Raycaster()
 
     // Debug
     if (this.debug) {
@@ -19,8 +22,8 @@ export default class ImageSpiral {
         expanded: false,
       })
     }
-
     this.setModel()
+    this.setMouseListener()
   }
 
   setModel() {
@@ -75,7 +78,39 @@ export default class ImageSpiral {
     window.addEventListener('wheel', onWheel, { passive: false })
   }
 
+  updateRaycaster() {
+    // Raycaster
+    this.raycaster.setFromCamera(this.mouse, this.experience.camera.instance)
+    const intersects = this.raycaster.intersectObjects(this.plane.children)
+
+    for (const intersect of intersects) {
+      // intersect.object.scale.set(1.1,1.1);
+      gsap.to(intersect.object.scale, { x: 1.7, y: 1.7 })
+    }
+
+    for (const object of this.plane.children) {
+      if (!intersects.find((intersect) => intersect.object === object)) {
+        gsap.to(object.scale, { x: 1, y: 1 })
+      }
+    }
+  }
+
+  setMouseListener() {
+    let self = this
+    // This is for getting the mouse x, y value from the browser to use with raycasting.
+    window.addEventListener('mousemove', (event) => {
+      //mouse.x is the first vector which has access to x values
+      // of mouse divided by the total width of the browser screen(sizes.width).
+      self.mouse.x = (event.clientX / self.experience.sizes.width) * 2 - 1
+
+      //mouse.y is the second vector which has access to y values. we need to
+      // minus (-) the divided mouseY and screen size of Y to scroll down.
+      self.mouse.y = -(event.clientY / self.experience.sizes.height) * 2 + 1
+    })
+  }
+
   update() {
+    this.updateRaycaster()
     if (this.plane) {
       this.position += this.y
       this.y *= 0.009
