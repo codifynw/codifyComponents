@@ -5,6 +5,7 @@ import AmbientLight from './AmbientLight.js'
 // import GoogleLeds from './GoogleLeds.js'
 // import LoupedeckButtons from './LoupedeckButtons.js'
 import ImageSpiral from './imageSpiral.js'
+// import ShaderBG from './ShaderBG.js'
 // import TopChair from './TopChair.js'
 // import ElgatoLight from './ElgatoLight.js'
 // import BouncingLogo from './BouncingLogo.js'
@@ -26,6 +27,7 @@ export default class World {
         // this.setGoogleLeds()
         // this.setLoupedeckButtons()
         this.setImageSpiral()
+        this.setShaderBG()
         // this.setTopChair()
         // this.setElgatoLight()
         // this.setBouncingLogo()
@@ -50,6 +52,10 @@ export default class World {
   setImageSpiral() {
     this.imageSpiral = new ImageSpiral()
   }
+
+  // setShaderBG() {
+  //   this.shaderBG = new ShaderBG()
+  // }
 
   setTopChair() {
     this.topChair = new TopChair()
