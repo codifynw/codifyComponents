@@ -2,9 +2,8 @@ import * as THREE from 'three'
 
 import Experience from './Experience.js'
 
-export default class CoffeeSteam {
+export default class ImageSpiral {
   constructor() {
-    console.log('adding coffee file')
     this.experience = new Experience()
     this.resources = this.experience.resources
     this.debug = this.experience.debug
@@ -14,7 +13,7 @@ export default class CoffeeSteam {
     // Debug
     if (this.debug) {
       this.debugFolder = this.debug.addFolder({
-        title: 'coffeeSteam',
+        title: 'ImageSpiral',
         expanded: false,
       })
     }
@@ -57,13 +56,30 @@ export default class CoffeeSteam {
 
       this.plane.add(plane)
     }
+
+    // WHEEL
+    let self = this
+    let onWheel = function (_event) {
+      _event.preventDefault()
+
+      if (_event.deltaY < 0) {
+        self.plane.rotation.y -= 0.03
+        self.plane.position.y += 0.03
+      } else if (_event.deltaY > 0) {
+        self.plane.rotation.y += 0.03
+        self.plane.position.y -= 0.03
+      }
+    }
+
+    window.addEventListener('mousewheel', onWheel, { passive: false })
+    window.addEventListener('wheel', onWheel, { passive: false })
   }
 
   update() {
-    let sinElapsed = Math.sin(this.time.elapsed * 0.0005)
+    // let sinElapsed = Math.sin(this.time.elapsed * 0.0005)
     // let cosElapsed = Math.cos(this.time.elapsed * 0.0005)
-
-    this.plane.rotation.y -= sinElapsed * 0.05
-    this.plane.position.y += sinElapsed * 0.05
+    // window.addEventListener('mousewheel', this.view.onWheel, { passive: false })
+    // this.plane.rotation.y -= sinElapsed * 0.05
+    // this.plane.position.y += sinElapsed * 0.05
   }
 }
