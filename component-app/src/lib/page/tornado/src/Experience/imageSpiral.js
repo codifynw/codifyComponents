@@ -31,15 +31,18 @@ export default class ImageSpiral {
     var angleStep = (Math.PI * 2) / objPerTurn
     var heightStep = 1.0
 
-    var geom = new THREE.BoxBufferGeometry(2, 3, 0.1)
     this.plane = new THREE.Group()
     this.scene.add(this.plane)
 
     for (let i = 0; i < turns * objPerTurn; i++) {
+      let geom = new THREE.BoxBufferGeometry(3, 2, 0.1)
+      if (this.resources.items[`spiral-${i}`].height > this.resources.items[`spiral-${i}`].width) {
+        let geom = new THREE.BoxBufferGeometry(2, 3, 0.1)
+      }
       let plane = new THREE.Mesh(
         geom,
         new THREE.MeshBasicMaterial({
-          color: Math.random() * 0x888888 + 0x888888,
+          map: this.resources.items[`spiral-${i}`],
         })
       )
 
@@ -63,11 +66,11 @@ export default class ImageSpiral {
       _event.preventDefault()
 
       if (_event.deltaY < 0) {
-        self.plane.rotation.y -= 0.03
-        self.plane.position.y += 0.03
+        self.plane.rotation.y -= 0.02
+        self.plane.position.y += 0.02
       } else if (_event.deltaY > 0) {
-        self.plane.rotation.y += 0.03
-        self.plane.position.y -= 0.03
+        self.plane.rotation.y += 0.02
+        self.plane.position.y -= 0.02
       }
     }
 
