@@ -9,6 +9,8 @@ export default class ImageSpiral {
     this.debug = this.experience.debug
     this.scene = this.experience.scene
     this.time = this.experience.time
+    this.y = 0
+    this.position = 0
 
     // Debug
     if (this.debug) {
@@ -23,6 +25,7 @@ export default class ImageSpiral {
 
   setModel() {
     // this.scene.add(new THREE.GridHelper(20, 10))
+    const textureLoader = new THREE.TextureLoader()
 
     this.radius = 10
     var turns = 2
@@ -35,14 +38,15 @@ export default class ImageSpiral {
     this.scene.add(this.plane)
 
     for (let i = 0; i < turns * objPerTurn; i++) {
-      let geom = new THREE.BoxBufferGeometry(3, 2, 0.1)
+      let geom = new THREE.BoxGeometry(3, 2, 0.1)
       if (this.resources.items[`spiral-${i}`].height > this.resources.items[`spiral-${i}`].width) {
-        let geom = new THREE.BoxBufferGeometry(2, 3, 0.1)
+        geom = new THREE.BoxGeometry(2, 3, 0.1)
       }
       let plane = new THREE.Mesh(
         geom,
         new THREE.MeshBasicMaterial({
-          map: this.resources.items[`spiral-${i}`],
+          map: textureLoader.load(`/spiral/${i}.jpg`),
+          // map: this.resources.items[`spiral-${i}`],
         })
       )
 
@@ -64,14 +68,7 @@ export default class ImageSpiral {
     let self = this
     let onWheel = function (_event) {
       _event.preventDefault()
-
-      if (_event.deltaY < 0) {
-        self.plane.rotation.y -= 0.02
-        self.plane.position.y += 0.02
-      } else if (_event.deltaY > 0) {
-        self.plane.rotation.y += 0.02
-        self.plane.position.y -= 0.02
-      }
+      self.y = _event.deltaY * 0.0007
     }
 
     window.addEventListener('mousewheel', onWheel, { passive: false })
@@ -79,6 +76,13 @@ export default class ImageSpiral {
   }
 
   update() {
+    if (this.plane) {
+      this.position += this.y
+      this.y *= 0.009
+      this.plane.rotation.y = this.position
+      this.plane.position.y = -this.position
+    }
+
     // let sinElapsed = Math.sin(this.time.elapsed * 0.0005)
     // let cosElapsed = Math.cos(this.time.elapsed * 0.0005)
     // window.addEventListener('mousewheel', this.view.onWheel, { passive: false })
