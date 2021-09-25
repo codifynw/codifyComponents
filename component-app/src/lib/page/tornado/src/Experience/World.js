@@ -27,7 +27,7 @@ export default class World {
         // this.setGoogleLeds()
         // this.setLoupedeckButtons()
         this.setImageSpiral()
-        this.setShaderBG()
+        // this.setShaderBG()
         // this.setTopChair()
         // this.setElgatoLight()
         // this.setBouncingLogo()

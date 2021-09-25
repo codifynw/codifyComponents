@@ -27,8 +27,7 @@ export default class Navigation {
     this.view.spherical.limits.theta = { min: -Math.PI * 0.5, max: 0 }
 
     this.view.target = {}
-    this.view.target.value = new THREE.Vector3(0, 2, 0)
-    // this.view.target.value.set(0, 3, -3)
+    this.view.target.value = new THREE.Vector3(0, 0, 0)
     this.view.target.smoothed = this.view.target.value.clone()
     this.view.target.smoothing = 0.005
     this.view.target.limits = {}
@@ -148,7 +147,6 @@ export default class Navigation {
      * Wheel
      */
     this.view.onWheel = (_event) => {
-      console.log('hello')
       _event.preventDefault()
 
       const normalized = normalizeWheel(_event)
@@ -167,10 +165,10 @@ export default class Navigation {
     this.view.spherical.value.radius += this.view.zoom.delta * this.view.zoom.sensitivity
 
     // Apply limits
-    this.view.spherical.value.radius = Math.min(
-      Math.max(this.view.spherical.value.radius, this.view.spherical.limits.radius.min),
-      this.view.spherical.limits.radius.max
-    )
+    // this.view.spherical.value.radius = Math.min(
+    //   Math.max(this.view.spherical.value.radius, this.view.spherical.limits.radius.min),
+    //   this.view.spherical.limits.radius.max
+    // )
 
     // Drag
     if (this.view.drag.alternative) {
@@ -187,18 +185,18 @@ export default class Navigation {
       this.view.target.value.add(right)
 
       // Apply limits
-      this.view.target.value.x = Math.min(
-        Math.max(this.view.target.value.x, this.view.target.limits.x.min),
-        this.view.target.limits.x.max
-      )
-      this.view.target.value.y = Math.min(
-        Math.max(this.view.target.value.y, this.view.target.limits.y.min),
-        this.view.target.limits.y.max
-      )
-      this.view.target.value.z = Math.min(
-        Math.max(this.view.target.value.z, this.view.target.limits.z.min),
-        this.view.target.limits.z.max
-      )
+      //   this.view.target.value.x = Math.min(
+      //     Math.max(this.view.target.value.x, this.view.target.limits.x.min),
+      //     this.view.target.limits.x.max
+      //   )
+      //   this.view.target.value.y = Math.min(
+      //     Math.max(this.view.target.value.y, this.view.target.limits.y.min),
+      //     this.view.target.limits.y.max
+      //   )
+      //   this.view.target.value.z = Math.min(
+      //     Math.max(this.view.target.value.z, this.view.target.limits.z.min),
+      //     this.view.target.limits.z.max
+      //   )
     } else {
       this.view.spherical.value.theta -=
         (this.view.drag.delta.x * this.view.drag.sensitivity) / this.config.smallestSide
@@ -206,14 +204,14 @@ export default class Navigation {
         (this.view.drag.delta.y * this.view.drag.sensitivity) / this.config.smallestSide
 
       // Apply limits
-      this.view.spherical.value.theta = Math.min(
-        Math.max(this.view.spherical.value.theta, this.view.spherical.limits.theta.min),
-        this.view.spherical.limits.theta.max
-      )
-      this.view.spherical.value.phi = Math.min(
-        Math.max(this.view.spherical.value.phi, this.view.spherical.limits.phi.min),
-        this.view.spherical.limits.phi.max
-      )
+      //   this.view.spherical.value.theta = Math.min(
+      //     Math.max(this.view.spherical.value.theta, this.view.spherical.limits.theta.min),
+      //     this.view.spherical.limits.theta.max
+      //   )
+      //   this.view.spherical.value.phi = Math.min(
+      //     Math.max(this.view.spherical.value.phi, this.view.spherical.limits.phi.min),
+      //     this.view.spherical.limits.phi.max
+      //   )
     }
 
     this.view.drag.delta.x = 0
