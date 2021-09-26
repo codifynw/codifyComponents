@@ -11,15 +11,10 @@
 		<link rel="stylesheet" type="text/css" href="css/base.css" />
 		<script>document.documentElement.className="js";var supportsCssVars=function(){var e,t=document.createElement("style");return t.innerHTML="root: { --tmp-var: bold; }",document.head.appendChild(t),e=!!(window.CSS&&window.CSS.supports&&window.CSS.supports("font-weight","var(--tmp-var)")),t.parentNode.removeChild(t),e};supportsCssVars()||alert("Please view this demo in a modern browser that supports CSS Variables.");</script>
 	</head>
-	<body>
+	<body class="demo-3">
 		<main>
+			<div class="message">Tilt your phone to see the effect.</div>
 			<div class="frame">
-				<div id="main-scroll-indicator" style="opacity: 1;"> 
-					<div id="main-scroll-indicator-text">Scroll to see more</div> 
-					<div id="main-scroll-indicator-arrow-container">
-						<svg xmlns="http://www.w3.org/2000/svg" width="5" fill="#fff" height="40" viewBox="0 0 5 40"><title>Vector Smart Object</title><path d="M0,40V0H1V35H5Z"></path></svg>
-					</div>
-				</div>				
 				<div 
 					id="gl" 
 					data-imageOriginal="img/mount.jpg" 
@@ -27,11 +22,22 @@
 					data-horizontalThreshold="15" 
 					data-verticalThreshold="25">
 				</div>
-				<div class="frame__content">
-					SKYSCAPE<br>
-					<span class="frame__sub-content">PHOTO TOURS</span>
+				<div class="frame__title-wrap">
+					<h1 class="frame__title">Fake 3D Effect with Shaders</h1>
+					<p class="frame__tagline">Move your mouse around.</a></p>
 				</div>
-				
+				<div class="frame__links">
+					<a href="https://tympanus.net/Development/GridRevealEffects/">Previous Demo</a>
+					<a href="https://tympanus.net/codrops/?p=38413">Article</a>
+				</div>
+				<a class="frame__github" href="https://github.com/akella/fake3d">GitHub</a>
+				<div class="frame__demos">
+					<a href="index.html" class="frame__demo">demo 1</a>
+					<a href="index2.html" class="frame__demo">demo 2</a>
+					<a href="index3.html" class="frame__demo frame__demo--current">demo 3</a>
+					<a href="index4.html" class="frame__demo">demo 4</a>
+				</div>
+				<div class="frame__content">SKYSCAPE</div>
 			</div>
 		</main>
 		<script src="js/lib/gyronorm.js"></script>
