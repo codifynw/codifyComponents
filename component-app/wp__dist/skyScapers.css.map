@@ -1,0 +1,1 @@
+{"version":3,"file":"skyScapers.css","mappings":"AAAA;EACE,YAAY;EACZ,aAAa;EACb,SAAS;EACT,iBAAiB;EACjB,gBAAgB;AAClB","sources":["webpack://codify-components/src/lib/page/skyScape/styles.css"],"sourcesContent":["body {\n  width: 100vw;\n  height: 100vh;\n  margin: 0;\n  background: black;\n  overflow: hidden;\n}\n"],"names":[],"sourceRoot":""}

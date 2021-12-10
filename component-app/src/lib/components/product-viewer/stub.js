@@ -2561,19 +2561,18 @@ const portraitProduct = {
 }
 
 const rooms = [
-  {
-    title: 'bedroom',
-    defaultHeight: 720,
-    defaultWidth: 1080,
-    defaultRatio: 1.5,
-    verticalCenter: 0.2,
-    portraitVerticalCenter: 0.2,
-    horizontalCenter: 40,
-    scaleInches: 60,
-    scalePercent: 0.7,
-    url:
-      '//cdn.shopify.com/shopifycloud/shopify/assets/no-image-2048-5e88c1b20e087fb7bbe9a3771824e743c244f437e4f8ba93bbf7b11b53f7824c.gif',
-  },
+  // {
+  //   title: 'entry',
+  //   defaultHeight: 720,
+  //   defaultWidth: 1080,
+  //   defaultRatio: 1.5,
+  //   verticalCenter: 0.2,
+  //   portraitVerticalCenter: 0.2,
+  //   horizontalCenter: 40,
+  //   scaleInches: 60,
+  //   scalePercent: 0.7,
+  //   url: 'https://cdn.shopify.com/s/files/1/0277/4394/4841/files/default.jpg?v=1613722437',
+  // },
   {
     title: 'living',
     defaultHeight: 2000,

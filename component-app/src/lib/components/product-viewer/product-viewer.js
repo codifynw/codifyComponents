@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { ProductImage } from '../product-image/product-image'
 import './product-viewer.scss'
 
-let thumbnails = ['main', 'details', 'wall', 'tbd']
+let thumbnails = ['main', 'details', 'wall', 'plain']
 
 let generateViewers = function () {
   let viewers = [
@@ -30,7 +30,6 @@ let generateViewers = function () {
 }
 
 export const ProductViewer = ({ product, rooms, ...props }) => {
-  const [windowWidth, setwindowWidth] = useState(window.innerWidth)
   const [selectedProduct, setselectedProduct] = useState({})
   const [activeThumbnailIndex, setactiveThumbnailIndex] = useState(0)
   const [activeRoomIndex, setactiveRoomIndex] = useState(0)
@@ -39,19 +38,7 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
 
   useEffect(() => {
     calculateWallSizes(size)
-  }, [size])
-
-  useEffect(() => {
-    calculateWallSizes(size)
-  }, [activeRoomIndex])
-
-  //   useEffect(() => {
-  //     window.addEventListener('resize', handleResize)
-  //   }, [])
-
-  //   if (!product.media[0]?.preview_image) {
-  //     return <div>Upload at least one image of the product to activate.</div>
-  //   }
+  }, [size, activeRoomIndex])
 
   function onOptionSelect(event) {
     const { name, value } = event.target
@@ -78,7 +65,8 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
 
     // PERCENT OF PHOTO OCCUPIED BY OBJECT WITH KNOWN MEASUREMENT
     // IF A BED IS 60 IN. AND TAKES UP 60% OF THE PHOTO, WE KNOW
-    // THE PHOTO LENGTH SPANS 100 INCHES
+    // THE PHOTO LENGTH SPANS 100 INCHES. WE CAN THEN CALCULATE THE
+    // WIDTH AND HEIGHT OF THE PHOTO.
     const scalePercent = rooms[activeRoomIndex].scalePercent
 
     viewers.map((viewer, index) => {
@@ -86,9 +74,9 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
 
       const scaleConversionRatio = viewer.container.width * scalePercent
       const PPI = scaleConversionRatio / rooms[activeRoomIndex].scaleInches
-      let resizedArray = []
-      let baseWidth
-      let baseHeight
+      let resizedArray = [],
+        baseWidth,
+        baseHeight
 
       // CALCULATE VERTICAL POSITION
       let centerYPointPixels = ''
@@ -125,10 +113,6 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
       }))
     })
   }
-
-  //   const handleResize = () => {
-  //     setwindowWidth(window.innerWidth)
-  //   }
 
   const handleSubmit = (e) => {
     e.preventDefault()

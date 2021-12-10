@@ -3,7 +3,6 @@ import styled from 'styled-components'
 const Image = styled.div`
   border-radius: 1px;
   position: absolute;
-
   width: ${(props) => props.widthValue};
   height: ${(props) => props.heightValue};
   top: ${(props) => props.topValue};
