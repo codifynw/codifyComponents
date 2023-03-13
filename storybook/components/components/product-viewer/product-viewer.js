@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { ProductImage } from '../product-image/product-image'
 import './product-viewer.scss'
 
@@ -35,23 +35,25 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
   const [activeThumbnailIndex, setactiveThumbnailIndex] = useState(0)
   const [activeRoomIndex, setactiveRoomIndex] = useState(0)
   const [size, setsize] = useState('0x0')
-  const [wallSizes, setwallSizes] = useState([])
+  const [stickyTop, setstickyTop] = useState(0)
+
+  const wallSizes = useMemo(() => {
+    const newWallSizes = {}
+
+    console.log({
+      size, activeRoomIndex, media: product.media, rooms
+    })
+
+    calculateWallSizes(size, activeRoomIndex, product.media, rooms).forEach((wallSize, index) => {
+      newWallSizes[generateViewers()[index].name] = wallSize
+    })
+    return newWallSizes
+  }, [size, activeRoomIndex, product.media, rooms])
+
 
   useEffect(() => {
-    calculateWallSizes(size)
-  }, [size])
-
-  useEffect(() => {
-    calculateWallSizes(size)
-  }, [activeRoomIndex])
-
-  //   useEffect(() => {
-  //     window.addEventListener('resize', handleResize)
-  //   }, [])
-
-  //   if (!product.media[0]?.preview_image) {
-  //     return <div>Upload at least one image of the product to activate.</div>
-  //   }
+    setstickyTop(document.querySelector('.sticky-container').offsetTop)
+  }, [])
 
   function onOptionSelect(event) {
     const { name, value } = event.target
@@ -70,20 +72,12 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
     setactiveRoomIndex(value)
   }
 
-  function calculateWallSizes(dimensions) {
+  function calculateWallSizes(dimensions, activeRoomIndex, media, rooms) {
     const [height, width] = dimensions.split('x')
-    const isLandscapeOrientation =
-      product.media[0]?.preview_image?.width > product.media[0]?.preview_image?.height
-    let viewers = generateViewers()
-
-    // PERCENT OF PHOTO OCCUPIED BY OBJECT WITH KNOWN MEASUREMENT
-    // IF A BED IS 60 IN. AND TAKES UP 60% OF THE PHOTO, WE KNOW
-    // THE PHOTO LENGTH SPANS 100 INCHES
+    const isLandscapeOrientation = media[0]?.preview_image?.width > media[0]?.preview_image?.height
     const scalePercent = rooms[activeRoomIndex].scalePercent
 
-    viewers.map((viewer, index) => {
-      //   const containerInchesWidth = (1 / scalePercent) * rooms[activeRoomIndex].scaleInches
-
+    return generateViewers().map((viewer, index) => {
       const scaleConversionRatio = viewer.container.width * scalePercent
       const PPI = scaleConversionRatio / rooms[activeRoomIndex].scaleInches
       let resizedArray = []
@@ -97,32 +91,29 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
         centerYPointPixels = rooms[activeRoomIndex].verticalCenter * viewer.container.height
         baseWidth = viewer.container.width * 0.8
         baseHeight =
-          (viewer.container.width * 0.8 * product.media[0]?.preview_image.height) /
-          product.media[0]?.preview_image.width
+          (viewer.container.width * 0.8 * media[0]?.preview_image.height) /
+          media[0]?.preview_image.width
       } else {
         resizedArray = [width * PPI, height * PPI]
         centerYPointPixels = rooms[activeRoomIndex].portraitVerticalCenter * viewer.container.height
         baseWidth =
-          (viewer.container.height * 0.8 * product.media[0]?.preview_image.width) /
-          product.media[0]?.preview_image.height
+          (viewer.container.height * 0.8 * media[0]?.preview_image.width) /
+          media[0]?.preview_image.height
         baseHeight = viewer.container.height * 0.8
       }
 
       const newTop = centerYPointPixels - resizedArray[0] * 0.5
       const newLeft = rooms[activeRoomIndex].horizontalCenter
 
-      setwallSizes((prevState) => ({
-        ...prevState,
-        [viewer.name]: {
-          height: resizedArray[0],
-          width: resizedArray[1],
-          top: newTop,
-          left: newLeft,
-          scaleConversionRatio: scaleConversionRatio,
-          baseimgWidthPx: baseWidth,
-          baseimgHeightPx: baseHeight,
-        },
-      }))
+      return {
+        height: resizedArray[0],
+        width: resizedArray[1],
+        top: newTop,
+        left: newLeft,
+        scaleConversionRatio: scaleConversionRatio,
+        baseimgWidthPx: baseWidth,
+        baseimgHeightPx: baseHeight,
+      }
     })
   }
 
@@ -137,57 +128,59 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
   return (
     <section className={['product-viewer'].join(' ')} {...props}>
       <div className="product-image-container">
-        <div className="product-image-nav">
-          {thumbnails.map((value, index) => (
-            <div
-              id={`thumbnail-${value}`}
-              key={index}
-              className={`thumbnail thumbnail-${value} ${value} ${
-                activeThumbnailIndex === index ? 'active' : ''
-              }`}
-              style={{
-                backgroundImage: index == 2 ? `url(${rooms[activeRoomIndex].url})` : '',
-              }}
-              onClick={() => onThumbnailSelect(index)} // pass the index
-            >
-              <ProductImage
-                onThumbnailWall={value === 'wall'}
-                measurements={wallSizes}
-                rotateImage={value === 'details'}
-                featured_image={product.featured_image}
-                thumbnailIndex={value}
-                containerType="thumbnail"
-              />
-            </div>
-          ))}
-        </div>
-        <div
-          id="product-hero-container"
-          className={`product-hero-container scene-${activeThumbnailIndex}`}
-          style={{
-            backgroundImage: activeThumbnailIndex == 2 ? `url(${rooms[activeRoomIndex].url})` : '',
-          }}
-        >
-          <select
-            className={`single-option-select background-setting-select
-                ${activeThumbnailIndex === 2 ? 'show' : ''}
-            `}
-            name="Room"
-            onChange={onRoomSelect}
-          >
-            {rooms.map((room, index) => (
-              <option key={index} value={index}>
-                {room.title}
-              </option>
+        <div className="sticky-container" style={{top: `${stickyTop}px`}}>
+          <div className="product-image-nav">
+            {thumbnails.map((value, index) => (
+              <div
+                id={`thumbnail-${value}`}
+                key={index}
+                className={`thumbnail thumbnail-${value} ${value} ${
+                  activeThumbnailIndex === index ? 'active' : ''
+                }`}
+                style={{
+                  backgroundImage: index === 2 ? `url(${rooms[activeRoomIndex].url})` : '',
+                }}
+                onClick={() => onThumbnailSelect(index)} // pass the index
+              >
+                <ProductImage
+                  onThumbnailWall={value === 'wall'}
+                  measurements={wallSizes}
+                  rotateImage={value === 'details'}
+                  featured_image={product.featured_image}
+                  thumbnailIndex={value}
+                  containerType="thumbnail"
+                />
+              </div>
             ))}
-          </select>
-          <ProductImage
-            featured_image={product.featured_image}
-            measurements={wallSizes}
-            rotateImage={activeThumbnailIndex === 1}
-            onWall={activeThumbnailIndex === 2}
-            containerType="room"
-          />
+          </div>
+          <div
+            id="product-hero-container"
+            className={`product-hero-container scene-${activeThumbnailIndex}`}
+            style={{
+              backgroundImage: activeThumbnailIndex === 2 ? `url(${rooms[activeRoomIndex].url})` : '',
+            }}
+          >
+            <select
+              className={`single-option-select background-setting-select
+                  ${activeThumbnailIndex === 2 ? 'show' : ''}
+              `}
+              name="Room"
+              onChange={onRoomSelect}
+            >
+              {rooms.map((room, index) => (
+                <option key={index} value={index}>
+                  {room.title}
+                </option>
+              ))}
+            </select>
+            <ProductImage
+              featured_image={product.featured_image}
+              measurements={wallSizes}
+              rotateImage={activeThumbnailIndex === 1}
+              onWall={activeThumbnailIndex === 2}
+              containerType="room"
+            />
+          </div>
         </div>
       </div>
       <div className="product-options-container">
@@ -234,6 +227,9 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
             <span>{product.selected.price}</span>
           </button>
         </form>
+        <div className="bottom-height">
+          Filler
+        </div>
       </div>
     </section>
   )
