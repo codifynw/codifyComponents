@@ -1,16 +1,9 @@
-// DEV ONLY
-.product-hero-container {
-  background: lightgray;
-}
-// END DEV ONLY
-
 .product-viewer {
   max-width: 1270px;
   display: flex;
 }
 
 .product-image-container {
-  display: flex;
   width: 62%;
   justify-content: center;
   vertical-align: top;
@@ -59,8 +52,6 @@
 }
 
 .product-options-container {
-  height: 600px;
-  overflow: auto;
   width: 35%;
   padding-right: 15px;
 
@@ -164,4 +155,14 @@
   &.show {
     display: block;
   }
+}
+
+.bottom-height {
+  height: 500px;
+}
+
+.sticky-container {
+  display: flex;
+  position: sticky;
+  z-index: 1000;
 }

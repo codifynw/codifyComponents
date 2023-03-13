@@ -82,7 +82,6 @@ export const ProductImage = ({
         className="hero-picture"
         featured_image={featured_image}
         rotateImage={rotateImage}
-        onWall={onWall}
         measurements={measurements}
         widthValue={determineWidth()}
         heightValue={determineHeight()}
