@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react'
 import { ProductImage } from '../product-image/product-image'
 import './product-viewer.scss'
 
-let thumbnails = ['main', 'details', 'wall', 'tbd']
+const thumbnails = ['main', 'details', 'wall', 'tbd']
 
 let generateViewers = function () {
   let viewers = [
@@ -34,22 +34,28 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
   const [selectedProduct, setselectedProduct] = useState({})
   const [activeThumbnailIndex, setactiveThumbnailIndex] = useState(0)
   const [activeRoomIndex, setactiveRoomIndex] = useState(0)
-  const [size, setsize] = useState('0x0')
+  const [size, setsize] = useState('20x30')
   const [stickyTop, setstickyTop] = useState(0)
+  const [step, setStep] = useState(0)
+
+  const nextStep = () => {
+    console.log('new step: ', step + 1)
+    if (step < 2) setStep(step + 1)
+  }
+
+  const previousStep = () => {
+    if (step > 0) setStep(step - 1)
+  }
 
   const wallSizes = useMemo(() => {
     const newWallSizes = {}
 
-    console.log({
-      size, activeRoomIndex, media: product.media, rooms
-    })
-
     calculateWallSizes(size, activeRoomIndex, product.media, rooms).forEach((wallSize, index) => {
       newWallSizes[generateViewers()[index].name] = wallSize
     })
+
     return newWallSizes
   }, [size, activeRoomIndex, product.media, rooms])
-
 
   useEffect(() => {
     setstickyTop(document.querySelector('.sticky-container').offsetTop)
@@ -128,7 +134,7 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
   return (
     <section className={['product-viewer'].join(' ')} {...props}>
       <div className="product-image-container">
-        <div className="sticky-container" style={{top: `${stickyTop}px`}}>
+        <div className="sticky-container" style={{ top: `${stickyTop}px` }}>
           <div className="product-image-nav">
             {thumbnails.map((value, index) => (
               <div
@@ -157,7 +163,8 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
             id="product-hero-container"
             className={`product-hero-container scene-${activeThumbnailIndex}`}
             style={{
-              backgroundImage: activeThumbnailIndex === 2 ? `url(${rooms[activeRoomIndex].url})` : '',
+              backgroundImage:
+                activeThumbnailIndex === 2 ? `url(${rooms[activeRoomIndex].url})` : '',
             }}
           >
             <select
@@ -186,9 +193,18 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
       <div className="product-options-container">
         <h3 className="title-container">{product.title}</h3>
         <div className="product-description">{product.description}</div>
+        <div>
+          <div className="option-title">Size</div>
+          <div className="option-title">Material</div>
+          <div className="option-title">Finish</div>
+        </div>
         <form onSubmit={handleSubmit}>
           {product.optionsWithValues.map((option, parentIndex) => (
-            <div className="option-container" key={parentIndex}>
+            <div
+              className="option-container"
+              key={parentIndex}
+              style={{ display: step === parentIndex ? 'block' : 'none' }}
+            >
               <div className="option-title">Select {option.name}:</div>
               <div className="options-container">
                 {option.values.map((value, index) => (
@@ -223,13 +239,24 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
               </div>
             </div>
           ))}
-          <button type="submit">
-            <span>{product.selected.price}</span>
-          </button>
+
+          {step > 0 && (
+            <button type="button" onClick={previousStep}>
+              Previous
+            </button>
+          )}
+          {step < 2 && (
+            <button type="button" onClick={nextStep}>
+              Next
+            </button>
+          )}
+          {step === 2 && (
+            <button type="submit">
+              <span>{product.selected.price}</span>
+            </button>
+          )}
         </form>
-        <div className="bottom-height">
-          Filler
-        </div>
+        <div className="bottom-height">Filler</div>
       </div>
     </section>
   )

@@ -1209,10 +1209,10 @@ const currentProduct = {
     },
   ],
   images: [
-    '//cdn.shopify.com/s/files/1/0277/4394/4841/products/Lost_ship_fixes_12x24_5a1aa0c4-e3fa-4821-86cb-9ef0a5c18f8a.jpg?v=1579554542',
+    'https://cdn.shopify.com/s/files/1/0246/0201/7873/products/DeathDunesCody_2048x2048.jpg?v=1572829346',
   ],
   featured_image:
-    '//cdn.shopify.com/s/files/1/0277/4394/4841/products/Lost_ship_fixes_12x24_5a1aa0c4-e3fa-4821-86cb-9ef0a5c18f8a.jpg?v=1579554542',
+    'https://cdn.shopify.com/s/files/1/0246/0201/7873/products/DeathDunesCody_2048x2048.jpg?v=1572829346',
   options: ['Size', 'Material', 'Finish'],
   media: [
     {
@@ -1224,13 +1224,13 @@ const currentProduct = {
         height: 1024,
         width: 2048,
         src:
-          'https://cdn.shopify.com/s/files/1/0277/4394/4841/products/Lost_ship_fixes_12x24_5a1aa0c4-e3fa-4821-86cb-9ef0a5c18f8a.jpg?v=1579554542',
+          'https://cdn.shopify.com/s/files/1/0246/0201/7873/products/DeathDunesCody_2048x2048.jpg?v=1572829346',
       },
       aspect_ratio: 2,
       height: 1024,
       media_type: 'image',
       src:
-        'https://cdn.shopify.com/s/files/1/0277/4394/4841/products/Lost_ship_fixes_12x24_5a1aa0c4-e3fa-4821-86cb-9ef0a5c18f8a.jpg?v=1579554542',
+        'https://cdn.shopify.com/s/files/1/0246/0201/7873/products/DeathDunesCody_2048x2048.jpg?v=1572829346',
       width: 2048,
     },
   ],
@@ -2490,10 +2490,10 @@ const portraitProduct = {
     },
   ],
   images: [
-    '//cdn.shopify.com/s/files/1/0277/4394/4841/products/Lost_ship_fixes_12x24_5a1aa0c4-e3fa-4821-86cb-9ef0a5c18f8a.jpg?v=1579554542',
+    'https://cdn.shopify.com/s/files/1/0246/0201/7873/products/DeathDunesCody_2048x2048.jpg?v=1572829346',
   ],
   featured_image:
-    '//cdn.shopify.com/s/files/1/0277/4394/4841/products/Lost_ship_fixes_12x24_5a1aa0c4-e3fa-4821-86cb-9ef0a5c18f8a.jpg?v=1579554542',
+    'https://cdn.shopify.com/s/files/1/0246/0201/7873/products/DeathDunesCody_2048x2048.jpg?v=1572829346',
   options: ['Size', 'Material', 'Finish'],
   media: [
     {
@@ -2505,13 +2505,13 @@ const portraitProduct = {
         height: 2048,
         width: 1365,
         src:
-          'https://cdn.shopify.com/s/files/1/0277/4394/4841/products/Lost_ship_fixes_12x24_5a1aa0c4-e3fa-4821-86cb-9ef0a5c18f8a.jpg?v=1579554542',
+          'https://cdn.shopify.com/s/files/1/0246/0201/7873/products/DeathDunesCody_2048x2048.jpg?v=1572829346',
       },
       aspect_ratio: 0.67,
       height: 2048,
       media_type: 'image',
       src:
-        'https://cdn.shopify.com/s/files/1/0277/4394/4841/products/Lost_ship_fixes_12x24_5a1aa0c4-e3fa-4821-86cb-9ef0a5c18f8a.jpg?v=1579554542',
+        'https://cdn.shopify.com/s/files/1/0246/0201/7873/products/DeathDunesCody_2048x2048.jpg?v=1572829346',
       width: 1365,
     },
   ],
@@ -2561,19 +2561,19 @@ const portraitProduct = {
 }
 
 const rooms = [
-  {
-    title: 'bedroom',
-    defaultHeight: 720,
-    defaultWidth: 1080,
-    defaultRatio: 1.5,
-    verticalCenter: 0.2,
-    portraitVerticalCenter: 0.2,
-    horizontalCenter: 40,
-    scaleInches: 60,
-    scalePercent: 0.7,
-    url:
-      '//cdn.shopify.com/shopifycloud/shopify/assets/no-image-2048-5e88c1b20e087fb7bbe9a3771824e743c244f437e4f8ba93bbf7b11b53f7824c.gif',
-  },
+  // {
+  //   title: 'bedroom',
+  //   defaultHeight: 720,
+  //   defaultWidth: 1080,
+  //   defaultRatio: 1.5,
+  //   verticalCenter: 0.2,
+  //   portraitVerticalCenter: 0.2,
+  //   horizontalCenter: 40,
+  //   scaleInches: 60,
+  //   scalePercent: 0.7,
+  //   url:
+  //     '//cdn.shopify.com/shopifycloud/shopify/assets/no-image-2048-5e88c1b20e087fb7bbe9a3771824e743c244f437e4f8ba93bbf7b11b53f7824c.gif',
+  // },
   {
     title: 'living',
     defaultHeight: 2000,

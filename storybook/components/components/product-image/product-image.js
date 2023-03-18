@@ -12,6 +12,7 @@ const Image = styled.div`
   transition: transform 0s ease, all 0.4s ease;
 
   transform: ${(props) => props.transformValue};
+  transform-style: preserve-3d;
   box-shadow: ${(props) =>
     props.rotateImage ? '-18px 6px 7px -6px rgb(0 0 0 / 10%)' : '-2px 4px 7px #000'};
 `
@@ -27,13 +28,14 @@ export const ProductImage = ({
   ...props
 }) => {
   const determineTransform = function () {
-    if (onWall || onThumbnailWall) {
-      return 'translateX(-50%)'
-    }
-    if (rotateImage) {
-      return 'translate(-36%, -50%) rotateY(43deg) scale3d(1, 1, 1)'
-    }
-    return 'translate(-50%, -50%)'
+    // if (onWall || onThumbnailWall) {
+    //   return 'translateX(-50%)'
+    // }
+    // if (rotateImage) {
+    //   return 'translate(-36%, -50%) rotateY(43deg) scale3d(1, 1, 1)'
+    // }
+    // return 'translate(-50%, -50%)'
+    return 'rotate3d(1, 20, 0, 33deg) translate(-50%, -50%)'
   }
 
   const determineHeight = function () {
@@ -47,11 +49,14 @@ export const ProductImage = ({
   }
 
   const determineWidth = function () {
-    if (onWall) {
-      return measurements.room?.width + 'px'
-    }
-    if (onThumbnailWall) {
-      return measurements.thumbnail?.width + 'px'
+    // if (onWall) {
+    //   return measurements.room?.width + 'px'
+    // }
+    // if (onThumbnailWall) {
+    //   return measurements.thumbnail?.width + 'px'
+    // }
+    if (containerType === 'room') {
+      debugger
     }
     return measurements[containerType]?.baseimgWidthPx + 'px'
   }
@@ -77,7 +82,6 @@ export const ProductImage = ({
   }
 
   return (
-    <div>
       <Image
         className="hero-picture"
         featured_image={featured_image}
@@ -89,6 +93,5 @@ export const ProductImage = ({
         leftValue={determineLeft()}
         transformValue={determineTransform()}
       />
-    </div>
   )
 }

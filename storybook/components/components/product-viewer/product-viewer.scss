@@ -1,6 +1,8 @@
 .product-viewer {
   max-width: 1270px;
   display: flex;
+  // background-color: rgb(58, 58, 58);
+  // color: white;
 }
 
 .product-image-container {
@@ -15,7 +17,7 @@
   }
   .product-hero-container {
     width: 80%;
-    perspective: 900px;
+    perspective: 1000px;
     position: relative;
 
     .hero-picture {
@@ -64,8 +66,7 @@
   height: 140px;
   width: 100%;
   margin: 10px 0px;
-  background-color: silver;
-  perspective: 900px;
+  perspective: 1000px;
 
   &.active {
     outline: 3px #1185ed solid;
@@ -147,6 +148,7 @@
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
+  perspective: 1000px;
 }
 
 .single-option-select {
