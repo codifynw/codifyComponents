@@ -1221,8 +1221,8 @@ const currentProduct = {
       position: 1,
       preview_image: {
         aspect_ratio: 2,
-        height: 1024,
-        width: 2048,
+        height: 2,
+        width: 3,
         src:
           'https://cdn.shopify.com/s/files/1/0246/0201/7873/products/DeathDunesCody_2048x2048.jpg?v=1572829346',
       },

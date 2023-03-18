@@ -49,15 +49,14 @@ export const ProductImage = ({
   }
 
   const determineWidth = function () {
-    // if (onWall) {
-    //   return measurements.room?.width + 'px'
-    // }
-    // if (onThumbnailWall) {
-    //   return measurements.thumbnail?.width + 'px'
-    // }
-    if (containerType === 'room') {
-      debugger
+    if (onWall) {
+      return measurements.room?.width + 'px'
     }
+    if (onThumbnailWall) {
+      return measurements.thumbnail?.width + 'px'
+    }
+
+    debugger
     return measurements[containerType]?.baseimgWidthPx + 'px'
   }
 

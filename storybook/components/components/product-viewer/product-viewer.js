@@ -22,6 +22,7 @@ let generateViewers = function () {
     }
 
     if (viewer.container.element) {
+      console.log('viewer.container.element.offsetWidth', viewer.container.element.offsetWidth)
       viewer.container.width = viewer.container.element.offsetWidth
       viewer.container.height = viewer.container.element.offsetHeight
     }
@@ -36,16 +37,7 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
   const [activeRoomIndex, setactiveRoomIndex] = useState(0)
   const [size, setsize] = useState('20x30')
   const [stickyTop, setstickyTop] = useState(0)
-  const [step, setStep] = useState(0)
 
-  const nextStep = () => {
-    console.log('new step: ', step + 1)
-    if (step < 2) setStep(step + 1)
-  }
-
-  const previousStep = () => {
-    if (step > 0) setStep(step - 1)
-  }
 
   const wallSizes = useMemo(() => {
     const newWallSizes = {}
@@ -200,11 +192,7 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
         </div>
         <form onSubmit={handleSubmit}>
           {product.optionsWithValues.map((option, parentIndex) => (
-            <div
-              className="option-container"
-              key={parentIndex}
-              style={{ display: step === parentIndex ? 'block' : 'none' }}
-            >
+            <>
               <div className="option-title">Select {option.name}:</div>
               <div className="options-container">
                 {option.values.map((value, index) => (
@@ -237,24 +225,8 @@ export const ProductViewer = ({ product, rooms, ...props }) => {
                   </div>
                 ))}
               </div>
-            </div>
+            </>
           ))}
-
-          {step > 0 && (
-            <button type="button" onClick={previousStep}>
-              Previous
-            </button>
-          )}
-          {step < 2 && (
-            <button type="button" onClick={nextStep}>
-              Next
-            </button>
-          )}
-          {step === 2 && (
-            <button type="submit">
-              <span>{product.selected.price}</span>
-            </button>
-          )}
         </form>
         <div className="bottom-height">Filler</div>
       </div>
