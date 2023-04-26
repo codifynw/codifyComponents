@@ -1,0 +1,459 @@
+<html>
+  <head>
+    <title>Mechanical Split Flip Display</title>
+    <style>
+      .flip-board-container {
+        display: flex;
+      }
+
+      .split-flap-container {
+        display: inline-block;
+        overflow: hidden;
+        position: relative;
+        width: 40px;
+        height: 60px;
+        margin-right: 5px;
+      }
+
+      .split-flap {
+        display: inline-block;
+        overflow: hidden;
+        position: absolute;
+        font-size: 24px;
+        width: 40px;
+        height: 60px;
+      }
+
+      .split-flap-inner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 49%;
+        transform-origin: bottom;
+        transform-style: preserve-3d;
+      }
+
+      .split-flap-bottom {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 49%;
+        transform-origin: top;
+      }
+
+      .split-flap-half {
+        position: absolute;
+        top: -0.3px;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        background-color: black;
+        color: white;
+        overflow: hidden;
+      }
+
+      .split-flap-half-letter-container {
+        position: relative;
+        height: 100%;
+        width: 100%;
+      }
+
+      .split-flap-half.front,
+      .split-flap-half.back {
+        display: block;
+        overflow: hidden;
+      }
+
+      .split-flap-half.back {
+        transform: rotateX(180deg);
+      }
+
+      .split-flap-half-letter {
+        position: absolute;
+        top: 15px;
+        left: 50%;
+        transform: translate(-50%);
+      }
+
+      .split-flap-half.back .split-flap-half-letter {
+        position: absolute;
+        bottom: initial;
+        top: -12px;
+        left: 50%;
+        transform: translate(-50%);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="flip-board-container"></div>
+  </body>
+  <script src="./minified//gsap.min.js"></script>
+  <script>
+    class FlipBoard {
+      constructor(target) {
+        this.target = target;
+        this.flipContainers = [];
+        this.letters = ",.ABCDEFGHIJKLMNOPQRSTUVWXYZ! ".split("");
+
+        for (let i = 0; i < 7; i++) {
+          this.flipContainers.push(this.createFlipContainer());
+        }
+
+        return this;
+      }
+
+      createFlipContainer() {
+        const splitFlapContainer = {
+          element: document.createElement("div"),
+          flaps: [],
+        };
+        splitFlapContainer.element.className = "split-flap-container";
+
+        for (let idx = 0; idx < 3; idx++) {
+          const splitFlap = this.createSplitFlap(idx);
+          splitFlapContainer.element.appendChild(splitFlap.element);
+          splitFlapContainer.flaps.push(splitFlap);
+        }
+        this.target.appendChild(splitFlapContainer.element);
+
+        return splitFlapContainer;
+      }
+
+      createSplitFlap(idx) {
+        const splitFlap = document.createElement("div");
+        splitFlap.className = `split-flap split-flap-${idx}`;
+
+        const splitFlapInner = document.createElement("div");
+        splitFlapInner.className = "split-flap-inner";
+
+        const splitFlapHalfBack = document.createElement("div");
+        splitFlapHalfBack.className = "split-flap-half back";
+
+        const splitFlapHalfBackLetterContainer = document.createElement("div");
+        splitFlapHalfBackLetterContainer.className =
+          "split-flap-half-letter-container";
+        splitFlapHalfBack.appendChild(splitFlapHalfBackLetterContainer);
+
+        const splitFlapHalfBackAbsolute = document.createElement("div");
+        splitFlapHalfBackAbsolute.className = "split-flap-half-letter";
+        splitFlapHalfBackAbsolute.textContent = "B";
+        splitFlapHalfBackLetterContainer.appendChild(splitFlapHalfBackAbsolute);
+
+        const splitFlapHalfFront = document.createElement("div");
+        splitFlapHalfFront.className = "split-flap-half front";
+
+        const splitFlapHalfFrontLetterContainer = document.createElement("div");
+        splitFlapHalfFrontLetterContainer.className =
+          "split-flap-half-letter-container";
+        splitFlapHalfFront.appendChild(splitFlapHalfFrontLetterContainer);
+
+        const splitFlapHalfFrontAbsolute = document.createElement("div");
+        splitFlapHalfFrontAbsolute.className = "split-flap-half-letter";
+        splitFlapHalfFrontAbsolute.textContent = idx === 0 ? "B" : "A";
+        splitFlapHalfFrontLetterContainer.appendChild(
+          splitFlapHalfFrontAbsolute
+        );
+
+        splitFlapInner.appendChild(splitFlapHalfBack);
+        splitFlapInner.appendChild(splitFlapHalfFront);
+        splitFlap.appendChild(splitFlapInner);
+        this.target.appendChild(splitFlap);
+
+        return {
+          back: splitFlapHalfBackAbsolute,
+          element: splitFlap,
+          front: splitFlapHalfFrontAbsolute,
+          top: splitFlapInner,
+        };
+      }
+
+      // Brekas under 0.5s
+      // displayWord(word) {
+      //   const paddedWord = word.toUpperCase().padEnd(5, " ");
+      //   const flipInterval = 0.5; // Flip interval in seconds
+
+      //   this.flipContainers.forEach((flipContainer, flipIdx) => {
+      //     const flipContainerFlaps = flipContainer.flaps;
+      //     const targetLetter = paddedWord[flipIdx];
+      //     const currentIndex = this.letters.indexOf(
+      //       flipContainerFlaps[1].front.textContent
+      //     );
+      //     const targetIndex = this.letters.indexOf(targetLetter);
+      //     const steps =
+      //       (targetIndex - currentIndex + this.letters.length) %
+      //       this.letters.length;
+
+      //     for (let stepIdx = 0; stepIdx < steps; stepIdx++) {
+      //       let flapToRevealIdx = 0
+      //       let flapToFlipIdx = 1
+      //       let flapToUnflipIdx = 2
+
+      //       if (stepIdx % 3 === 1) {
+      //         flapToRevealIdx = 2;
+      //         flapToFlipIdx = 0;
+      //         flapToUnflipIdx = 1;
+      //       }
+
+      //       if (stepIdx % 3 === 2) {
+      //         flapToRevealIdx = 1;
+      //         flapToFlipIdx = 2;
+      //         flapToUnflipIdx = 0;
+      //       }
+
+      //       const flapToFlip = flipContainerFlaps[flapToFlipIdx].element;
+      //       const flapToUnflip = flipContainerFlaps[flapToUnflipIdx].element;
+      //       const flapToReveal = flipContainerFlaps[flapToRevealIdx].element;
+
+      //       const currentLetter = flipContainerFlaps[1].front.textContent;
+      //       const nextLetter =
+      //         this.letters[(currentIndex + stepIdx + 1) % this.letters.length];
+      //       const letterAfterNext =
+      //         this.letters[(currentIndex + stepIdx + 2) % this.letters.length];
+
+      //       gsap
+      //         .timeline({
+      //           delay: stepIdx * flipInterval,
+      //         })
+      //         .call(() => {
+      //           flipContainerFlaps[flapToRevealIdx].front.textContent =
+      //             nextLetter;
+      //           flipContainerFlaps[flapToFlipIdx].back.textContent =
+      //           nextLetter;
+
+      //           flapToReveal.style.zIndex = 1;
+      //           flapToUnflip.style.zIndex = 0;
+      //           flapToFlip.style.zIndex = 2;
+      //         })
+      //         .to(flapToFlip.querySelector(".split-flap-inner"), {
+      //           duration: flipInterval / 2,
+      //           rotationX: 180,
+      //           top: "0.2px",
+      //         })
+      //         .to(flapToUnflip.querySelector(".split-flap-inner"), {
+      //           rotationX: 0,
+      //           top: "0%",
+      //         })
+      //         .call(() => {
+      //           flipContainerFlaps[flapToUnflipIdx].front.textContent =
+      //           letterAfterNext;
+      //           flipContainerFlaps[flapToUnflipIdx].back.textContent =
+      //             letterAfterNext;
+      //         });
+      //     }
+      //   });
+      // }
+
+      // WORKINGISH 1
+      //   displayWord(word) {
+      //     const paddedWord = word.toUpperCase().padEnd(5, " ");
+      //     const flipInterval = 0.1; // Flip interval in seconds
+
+      //     const flipLetter = (
+      //       flipContainer,
+      //       targetLetter,
+      //       currentIndex,
+      //       stepIdx
+      //     ) => {
+      //       if (stepIdx === 0) return;
+
+      //       const flipContainerFlaps = flipContainer.flaps;
+      //       const targetIndex = this.letters.indexOf(targetLetter);
+      //       const steps =
+      //         (targetIndex - currentIndex + this.letters.length) %
+      //         this.letters.length;
+
+      //       let flapToRevealIdx = 0;
+      //       let flapToFlipIdx = 1;
+      //       let flapToUnflipIdx = 2;
+
+      //       if (stepIdx % 3 === 1) {
+      //         flapToRevealIdx = 2;
+      //         flapToFlipIdx = 0;
+      //         flapToUnflipIdx = 1;
+      //       }
+
+      //       if (stepIdx % 3 === 2) {
+      //         flapToRevealIdx = 1;
+      //         flapToFlipIdx = 2;
+      //         flapToUnflipIdx = 0;
+      //       }
+
+      //       const flapToFlip = flipContainerFlaps[flapToFlipIdx].element;
+      //       const flapToUnflip = flipContainerFlaps[flapToUnflipIdx].element;
+      //       const flapToReveal = flipContainerFlaps[flapToRevealIdx].element;
+
+      //       const currentLetter = flipContainerFlaps[1].front.textContent;
+      //       const nextLetter =
+      //         this.letters[(currentIndex + stepIdx) % this.letters.length];
+      //       const letterAfterNext =
+      //         this.letters[(currentIndex + stepIdx + 1) % this.letters.length];
+
+      //       gsap
+      //         .timeline()
+      //         .call(() => {
+      //           flipContainerFlaps[flapToRevealIdx].front.textContent =
+      //             nextLetter;
+      //           flipContainerFlaps[flapToFlipIdx].back.textContent = nextLetter;
+
+      //           flapToReveal.style.zIndex = 1;
+      //           flapToUnflip.style.zIndex = 0;
+      //           flapToFlip.style.zIndex = 2;
+      //         })
+      //         .to(flapToFlip.querySelector(".split-flap-inner"), {
+      //           duration: 0.2,
+      //           rotationX: 180,
+      //           top: "0.2px",
+      //         })
+      //         .to(flapToUnflip.querySelector(".split-flap-inner"), {
+      //           rotationX: 0,
+      //           top: "0%",
+      //         })
+      //         .call(() => {
+      //           flipContainerFlaps[flapToUnflipIdx].front.textContent =
+      //             letterAfterNext;
+      //           flipContainerFlaps[flapToUnflipIdx].back.textContent =
+      //             letterAfterNext;
+      //         })
+      //         .eventCallback("onComplete", () => {
+      //           if (stepIdx < steps) {
+      //             flipLetter(
+      //               flipContainer,
+      //               targetLetter,
+      //               currentIndex,
+      //               stepIdx + 1
+      //             );
+      //           }
+      //         });
+      //     };
+
+      //     this.flipContainers.forEach((flipContainer, flipIdx) => {
+      //       const targetLetter = paddedWord[flipIdx];
+      //       const currentIndex = this.letters.indexOf(
+      //         flipContainer.flaps[1].front.textContent
+      //       );
+      //       flipLetter(flipContainer, targetLetter, currentIndex, 1);
+      //     });
+      //   }
+
+      displayWord(word) {
+        const paddedWord = word.toUpperCase().padEnd(5, " ");
+        const flipInterval = 0.01; // Flip interval in seconds
+
+        const flipLetter = (
+          flipContainer,
+          targetLetter,
+          currentIndex,
+          stepIdx
+        ) => {
+          if (stepIdx === 0) return;
+
+          const flipContainerFlaps = flipContainer.flaps;
+          const targetIndex = this.letters.indexOf(targetLetter);
+          const stepsForward =
+            (targetIndex - currentIndex + this.letters.length) %
+            this.letters.length;
+          const stepsBackward =
+            (currentIndex - targetIndex + this.letters.length) %
+            this.letters.length;
+          const steps =
+            stepsForward <= stepsBackward ? stepsForward : -stepsBackward;
+
+          let flapToRevealIdx = 0;
+          let flapToFlipIdx = 1;
+          let flapToUnflipIdx = 2;
+
+          if (stepIdx % 3 === 1) {
+            flapToRevealIdx = 2;
+            flapToFlipIdx = 0;
+            flapToUnflipIdx = 1;
+          }
+
+          if (stepIdx % 3 === 2) {
+            flapToRevealIdx = 1;
+            flapToFlipIdx = 2;
+            flapToUnflipIdx = 0;
+          }
+
+          const flapToFlip = flipContainerFlaps[flapToFlipIdx].element;
+          const flapToUnflip = flipContainerFlaps[flapToUnflipIdx].element;
+          const flapToReveal = flipContainerFlaps[flapToRevealIdx].element;
+
+          const currentLetter = flipContainerFlaps[1].front.textContent;
+          const nextLetter =
+            this.letters[
+              (currentIndex +
+                stepIdx * Math.sign(steps) +
+                this.letters.length) %
+                this.letters.length
+            ];
+          const letterAfterNext =
+            this.letters[
+              (currentIndex +
+                (stepIdx + 1) * Math.sign(steps) +
+                this.letters.length) %
+                this.letters.length
+            ];
+
+          gsap
+            .timeline()
+            .call(() => {
+              flipContainerFlaps[flapToRevealIdx].front.textContent =
+                nextLetter;
+              flipContainerFlaps[flapToFlipIdx].back.textContent = nextLetter;
+
+              flapToReveal.style.zIndex = 1;
+              flapToUnflip.style.zIndex = 0;
+              flapToFlip.style.zIndex = 2;
+            })
+            .to(flapToFlip.querySelector(".split-flap-inner"), {
+              duration: 0.005,
+              rotationX: 180,
+              top: "0.2px",
+            })
+            .to(flapToUnflip.querySelector(".split-flap-inner"), {
+              rotationX: 0,
+              top: "0%",
+            })
+            .call(() => {
+              flipContainerFlaps[flapToUnflipIdx].front.textContent =
+                letterAfterNext;
+              flipContainerFlaps[flapToUnflipIdx].back.textContent =
+                letterAfterNext;
+            })
+            .eventCallback("onComplete", () => {
+              if (Math.abs(stepIdx) < Math.abs(steps)) {
+                console.log('next')
+                flipLetter(
+                  flipContainer,
+                  targetLetter,
+                  currentIndex,
+                  stepIdx + 1
+                );
+              }
+            });
+        };
+
+        this.flipContainers.forEach((flipContainer, flipIdx) => {
+          const targetLetter = paddedWord[flipIdx];
+          const currentIndex = this.letters.indexOf(
+            flipContainer.flaps[1].front.textContent
+          );
+          flipLetter(flipContainer, targetLetter, currentIndex, 1);
+        });
+      }
+    }
+
+    const flipBoardContainer = document.querySelector(".flip-board-container");
+    const flipBoard = new FlipBoard(flipBoardContainer);
+    setTimeout(() => {
+      flipBoard.displayWord("MILES!");
+    }, 1000);
+
+    setTimeout(() => {
+      flipBoard.displayWord(" BAC! ");
+    }, 15000);
+  </script>
+</html>
