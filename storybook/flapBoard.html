@@ -99,7 +99,7 @@
         this.flipContainers = [];
         this.letters = ",.ABCDEFGHIJKLMNOPQRSTUVWXYZ! ".split("");
 
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < 15; i++) {
           this.flipContainers.push(this.createFlipContainer());
         }
 
@@ -171,120 +171,9 @@
         };
       }
 
-      displayWordStillSlow(word) {
+
+      displayWord(word) {
         const paddedWord = word.toUpperCase().padEnd(5, " ");
-
-        const flipDuration = 0.1; // Control the duration of each flip animation
-        const stagger = 0.1; // Control the stagger delay between flip containers (in milliseconds)
-
-        // Create a single timeline for the entire animation
-        const masterTimeline = gsap.timeline();
-
-        this.flipContainers.forEach((flipContainer, flipIdx) => {
-          const targetLetter = paddedWord[flipIdx];
-          const currentIndex = this.letters.indexOf(
-            flipContainer.flaps[1].front.textContent
-          );
-
-          const tl = gsap.timeline({ paused: true });
-
-          const flip = (stepIdx) => {
-            if (stepIdx === 0) return;
-
-            const flipContainerFlaps = flipContainer.flaps;
-            const targetIndex = this.letters.indexOf(targetLetter);
-            const stepsForward =
-              (targetIndex - currentIndex + this.letters.length) %
-              this.letters.length;
-            const stepsBackward =
-              (currentIndex - targetIndex + this.letters.length) %
-              this.letters.length;
-            const steps =
-              stepsForward <= stepsBackward ? stepsForward : -stepsBackward;
-
-            let flapToRevealIdx = 0;
-            let flapToFlipIdx = 1;
-            let flapToUnflipIdx = 2;
-
-            if (stepIdx % 3 === 1) {
-              flapToRevealIdx = 2;
-              flapToFlipIdx = 0;
-              flapToUnflipIdx = 1;
-            }
-
-            if (stepIdx % 3 === 2) {
-              flapToRevealIdx = 1;
-              flapToFlipIdx = 2;
-              flapToUnflipIdx = 0;
-            }
-
-            const flapToFlip = flipContainerFlaps[flapToFlipIdx].element;
-            const flapToUnflip = flipContainerFlaps[flapToUnflipIdx].element;
-            const flapToReveal = flipContainerFlaps[flapToRevealIdx].element;
-
-            const currentLetter = flipContainerFlaps[1].front.textContent;
-            const nextLetter =
-              this.letters[
-                (currentIndex +
-                  stepIdx * Math.sign(steps) +
-                  this.letters.length) %
-                  this.letters.length
-              ];
-            const letterAfterNext =
-              this.letters[
-                (currentIndex +
-                  (stepIdx + 1) * Math.sign(steps) +
-                  this.letters.length) %
-                  this.letters.length
-              ];
-
-            gsap
-              .timeline()
-              .call(() => {
-                flipContainerFlaps[flapToRevealIdx].front.textContent =
-                  nextLetter;
-                flipContainerFlaps[flapToFlipIdx].back.textContent = nextLetter;
-
-                flapToReveal.style.zIndex = 1;
-                flapToUnflip.style.zIndex = 0;
-                flapToFlip.style.zIndex = 2;
-              })
-              .to(flapToFlip.querySelector(".split-flap-inner"), {
-                duration: 0.005,
-                rotationX: 180,
-                top: "0.2px",
-              })
-              .to(flapToUnflip.querySelector(".split-flap-inner"), {
-                rotationX: 0,
-                top: "0%",
-              })
-              .call(() => {
-                flipContainerFlaps[flapToUnflipIdx].front.textContent =
-                  letterAfterNext;
-                flipContainerFlaps[flapToUnflipIdx].back.textContent =
-                  letterAfterNext;
-              })
-              .eventCallback("onComplete", () => {
-                if (Math.abs(stepIdx) < Math.abs(steps)) {
-                  flip(stepIdx + 1);
-                }
-              });
-
-            // Replace the onComplete event callback with the following code
-          };
-
-          flip(1);
-
-          masterTimeline.add(tl, flipIdx * stagger); // Add the timeline for each flip container to the master timeline
-        });
-
-        // Update the duration of each flip animation in the master timeline
-        masterTimeline.timeScale(1 / flipDuration);
-      }
-
-      displayWordSlow(word) {
-        const paddedWord = word.toUpperCase().padEnd(5, " ");
-        const stagger = 50; // Add this line to control the stagger delay between flip containers (in milliseconds)
 
         const flipLetter = (
           flipContainer,
@@ -353,12 +242,13 @@
               flapToFlip.style.zIndex = 2;
             })
             .to(flapToFlip.querySelector(".split-flap-inner"), {
-              duration: 0.25,
+              duration: 0.07,
               rotationX: 180,
               top: "0.2px",
             })
             .to(flapToUnflip.querySelector(".split-flap-inner"), {
               rotationX: 0,
+              duration: 0.07,
               top: "0%",
             })
             .call(() => {
@@ -366,6 +256,9 @@
                 letterAfterNext;
               flipContainerFlaps[flapToUnflipIdx].back.textContent =
                 letterAfterNext;
+            })
+            .call(() => {
+              console.log('next letter', nextLetter)
             })
             .eventCallback("onComplete", () => {
               if (Math.abs(stepIdx) < Math.abs(steps)) {
@@ -387,7 +280,7 @@
           setTimeout(() => {
             // Wrap the flipLetter call inside a setTimeout function
             flipLetter(flipContainer, targetLetter, currentIndex, 1);
-          }, stagger * flipIdx); // Use the stagger delay multiplied by the flip container index
+          },  flipIdx); // Use the stagger delay multiplied by the flip container index
         });
       }
     }
@@ -395,11 +288,12 @@
     const flipBoardContainer = document.querySelector(".flip-board-container");
     const flipBoard = new FlipBoard(flipBoardContainer);
     setTimeout(() => {
-      flipBoard.displayWordSlow("Hello!");
+      flipBoard.displayWord("This Works");
     }, 1000);
 
     setTimeout(() => {
-      flipBoard.displayWordSlow(" JAC! ");
-    }, 15000);
+      flipBoard.displayWord("Hello World!");
+    }, 6000);    
+
   </script>
 </html>
