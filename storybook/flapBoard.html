@@ -12,7 +12,7 @@
         position: relative;
         width: 40px;
         height: 60px;
-        margin-right: 5px;
+        margin-right: 1px;
       }
 
       .split-flap {
@@ -29,10 +29,10 @@
         top: 0;
         left: 0;
         width: 100%;
-        height: 49%;
+        height: 50%;
         transform-origin: bottom;
         transform-style: preserve-3d;
-        border: 1px solid gray;
+        /* border: 1px solid gray; */
       }
 
       .split-flap-bottom {
@@ -40,7 +40,7 @@
         bottom: 0;
         left: 0;
         width: 100%;
-        height: 49%;
+        height: 50%;
         transform-origin: top;
       }
 
@@ -99,7 +99,7 @@
         this.flipContainers = [];
         this.letters = ",.ABCDEFGHIJKLMNOPQRSTUVWXYZ! ".split("");
 
-        for (let i = 0; i < 15; i++) {
+        for (let i = 0; i < 26; i++) {
           this.flipContainers.push(this.createFlipContainer());
         }
 
@@ -171,9 +171,8 @@
         };
       }
 
-
       displayWord(word) {
-        const paddedWord = word.toUpperCase().padEnd(5, " ");
+        word = word.toUpperCase()
 
         const flipLetter = (
           flipContainer,
@@ -181,22 +180,31 @@
           currentIndex,
           stepIdx
         ) => {
-          if (stepIdx === 0) return;
+            // kill any ongoing animations before starting a new one
+            gsap.killTweensOf(flipContainer.flaps[0].element.querySelector(".split-flap-inner"));
+            gsap.killTweensOf(flipContainer.flaps[1].element.querySelector(".split-flap-inner"));
+            gsap.killTweensOf(flipContainer.flaps[2].element.querySelector(".split-flap-inner"));
+  
+          // if (stepIdx === 0) return;
 
           const flipContainerFlaps = flipContainer.flaps;
           const targetIndex = this.letters.indexOf(targetLetter);
           const stepsForward =
             (targetIndex - currentIndex + this.letters.length) %
             this.letters.length;
-          const stepsBackward =
-            (currentIndex - targetIndex + this.letters.length) %
-            this.letters.length;
-          const steps =
-            stepsForward <= stepsBackward ? stepsForward : -stepsBackward;
+          // const stepsBackward =
+          //   (currentIndex - targetIndex + this.letters.length) %
+          //   this.letters.length;
+          // const steps =
+          //   stepsForward <= stepsBackward ? stepsForward : -stepsBackward;
+
+          const steps = stepsForward;
 
           let flapToRevealIdx = 0;
           let flapToFlipIdx = 1;
           let flapToUnflipIdx = 2;
+
+          let duration = 0.02;
 
           if (stepIdx % 3 === 1) {
             flapToRevealIdx = 2;
@@ -208,6 +216,10 @@
             flapToRevealIdx = 1;
             flapToFlipIdx = 2;
             flapToUnflipIdx = 0;
+          }
+
+          if (stepIdx + 2 > steps) {
+            duration = 0.25;
           }
 
           const flapToFlip = flipContainerFlaps[flapToFlipIdx].element;
@@ -242,23 +254,14 @@
               flapToFlip.style.zIndex = 2;
             })
             .to(flapToFlip.querySelector(".split-flap-inner"), {
-              duration: 0.07,
+              duration: duration,
               rotationX: 180,
-              top: "0.2px",
+              top: "0px",
             })
             .to(flapToUnflip.querySelector(".split-flap-inner"), {
               rotationX: 0,
-              duration: 0.07,
+              duration: duration,
               top: "0%",
-            })
-            .call(() => {
-              flipContainerFlaps[flapToUnflipIdx].front.textContent =
-                letterAfterNext;
-              flipContainerFlaps[flapToUnflipIdx].back.textContent =
-                letterAfterNext;
-            })
-            .call(() => {
-              console.log('next letter', nextLetter)
             })
             .eventCallback("onComplete", () => {
               if (Math.abs(stepIdx) < Math.abs(steps)) {
@@ -273,27 +276,50 @@
         };
 
         this.flipContainers.forEach((flipContainer, flipIdx) => {
-          const targetLetter = paddedWord[flipIdx];
+          const targetLetter = word[flipIdx];
           const currentIndex = this.letters.indexOf(
             flipContainer.flaps[1].front.textContent
           );
-          setTimeout(() => {
-            // Wrap the flipLetter call inside a setTimeout function
+
             flipLetter(flipContainer, targetLetter, currentIndex, 1);
-          },  flipIdx); // Use the stagger delay multiplied by the flip container index
+
         });
       }
     }
 
     const flipBoardContainer = document.querySelector(".flip-board-container");
     const flipBoard = new FlipBoard(flipBoardContainer);
+
+    // setTimeout(() => {
+    //   flipBoard.displayWord("abcdefghijklmnopqrstuvwxyz");
+    // }, 1000);
+
+    // setTimeout(() => {
+    //   flipBoard.displayWord("Sublime Morgan Temperature");
+    // }, 4000);
+
     setTimeout(() => {
-      flipBoard.displayWord("This Works");
+      flipBoard.displayWord("abcdefghijklmnopqrstuvwxyz");
     }, 1000);
 
     setTimeout(() => {
-      flipBoard.displayWord("Hello World!");
-    }, 6000);    
+      flipBoard.displayWord("This is a test");
+    }, 2200);
 
+    setTimeout(() => {
+      flipBoard.displayWord("This is a stress test");
+    }, 2400);
+
+    setTimeout(() => {
+      flipBoard.displayWord("Hello World!!");
+    }, 2500);
+
+    setTimeout(() => {
+      flipBoard.displayWord("This is a rapid stress test");
+    }, 3400);
+
+    setTimeout(() => {
+      flipBoard.displayWord("bcdefghijklmnopqrstuvwxyza");
+    }, 5000);
   </script>
 </html>
