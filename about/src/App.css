@@ -1,0 +1,73 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: black;
+}
+
+.about-page {
+  background-color: black;
+  color: white;
+  min-height: 150vh;
+  padding: 0 32px;
+}
+
+.about-page-content {
+  margin: 0 auto;
+  padding-top: 45px;
+  padding-bottom: 90px;
+}
+
+section.about-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 3rem 0 5rem;
+  position: relative;
+}
+
+section.about-section .about-section-text,
+section.about-section .about-section-image {
+  max-width: 50%;
+  width: 50%;
+}
+
+.about-section img {
+  max-height: 800px;
+}
+
+section.about-section .text-container h2 {
+  padding-bottom: 1rem;
+}
+
+
+section.about-section .text-container {
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+
+/* REVERSE STYLES */
+section.about-section.reverse {
+  flex-direction: row-reverse;
+}
+section.about-section.reverse .text-container {
+  float: right;
+}
+
+
+/* LAST SECTION */
+section.about-section .text-section.absolute {
+  position: absolute;
+  left: 50%;
+  top: 15%;
+}
+
+section.about-section.final {
+  padding-bottom: 0;
+}
