@@ -13,8 +13,9 @@ const Image = styled.div`
 
   transform: ${(props) => props.transformValue};
   transform-style: preserve-3d;
-  box-shadow: ${(props) =>
-    props.rotateImage ? '-18px 6px 7px -6px rgb(0 0 0 / 10%)' : '-2px 4px 7px #000'};
+
+
+    box-shadow: -179px 139px 19px -151px, -34px 2px 12px -27px
 `
 
 export const ProductImage = ({
@@ -28,12 +29,12 @@ export const ProductImage = ({
   ...props
 }) => {
   const determineTransform = function () {
-    // if (onWall || onThumbnailWall) {
-    //   return 'translateX(-50%)'
-    // }
-    // if (rotateImage) {
-    //   return 'translate(-36%, -50%) rotateY(43deg) scale3d(1, 1, 1)'
-    // }
+    if (onWall || onThumbnailWall) {
+      return 'translateX(-50%)'
+    }
+    if (rotateImage) {
+      return 'translate(-36%, -50%) rotateY(43deg) scale3d(1, 1, 1)'
+    }
     // return 'translate(-50%, -50%)'
     return 'rotate3d(1, 20, 0, 33deg) translate(-50%, -50%)'
   }
@@ -56,7 +57,6 @@ export const ProductImage = ({
       return measurements.thumbnail?.width + 'px'
     }
 
-    debugger
     return measurements[containerType]?.baseimgWidthPx + 'px'
   }
 
