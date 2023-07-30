@@ -11,27 +11,7 @@
         background-color: black;
       }
 
-      .fore-box {
-        z-index: 10;
-      }
-
-      .img {
-        width: 100%;
-        height: 100%;
-        transition: all 5s;
-      }
-
-      .fore {
-        z-index: 10;
-        background-image: url('./img/fore.png');
-        background-size: cover;
-      }
-
-      .box.on .fore {
-        transform: translateZ(200px);
-      }
-
-      button {
+            button {
         width: 84px;
         padding: 10px;
         color: black;
@@ -59,7 +39,33 @@
         z-index: 100;
       }
 
-      .ui {
+      #foreground {
+        position: relative;
+        perspective: 400px;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        transform-style: preserve-3d;
+        transition: perspective cubic-bezier(0.075, 0.82, 0.165, 1) 5s;
+        z-index: 10;
+      }      
+
+      #fg-img {
+        z-index: 10;
+        background-image: url('./img/fore.png');
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+        transition: all 5s;
+      }
+
+      #foreground.on #fg-img {
+        transform: translateZ(200px);
+      }
+
+
+
+      #background {
         position: absolute;
         top: 0;
         left: 0;
@@ -72,7 +78,7 @@
         overflow: hidden;
       }
 
-      .ui .bg {
+      #bg-img {
         height: 100%;
         width: 100%;
         background-image: url('./img/bg.png');
@@ -83,22 +89,14 @@
         transition: all 5s;
       }
 
-      .ui.on .bg{
+      #background.on #bg-img {
         transform: translateZ(0);
         filter: blur(4px);
         -webkit-filter: blur(4px);
-        transition: all  5s;
+        transition: all 5s;
       }
 
-      .box {
-        position: relative;
-        perspective: 400px;
-        width: 100vw;
-        height: 100vh;
-        overflow: hidden;
-        transform-style: preserve-3d;
-        transition: perspective cubic-bezier(0.075, 0.82, 0.165, 1) 5s;
-      }
+
 
       .empty-space {
         padding-bottom: 200vh;
@@ -108,32 +106,23 @@
   </head>
 
   <body>
-    <div id="ui" class="ui on">
-      <div id="bg" class="bg"></div>
-    </div>
-    <div id="fore-box" class="box on fore-box">
-      <img class="img fore" />
-    </div>
-      <div class="dark-bg empty-space">
-        <p>Empty</p>
-        <p>Empty</p>
-        <p>Empty</p>
-        <p>Empty</p>
-        <p>Empty</p>
-        <p>Empty</p>
-        <p>Empty</p>
-        <p>Empty</p>
-        <p>Empty</p>
-        <p>Empty</p>
-        <p>Empty</p>
-        <p>Empty</p>
-      </div>    
+    <main>
+      <section id="background" class="on">
+        <div id="bg-img"></div>
+      </section>
+      <section id="foreground" class="box on">
+        <div id="fg-img" class="img"></div>
+      </section>
+    </main>
+    <section class="dark-bg empty-space">
+      <p>Content will go here</p>
+    </section>
     <button class="toggle-btn">Toggle</button>
     <script>
       document.querySelectorAll('button').forEach(function (button) {
         button.addEventListener('click', function () {
-          document.getElementById('fore-box').classList.toggle('on')
-          document.getElementById('ui').classList.toggle('on')
+          document.getElementById('foreground').classList.toggle('on')
+          document.getElementById('background').classList.toggle('on')
         })
       })
     </script>
