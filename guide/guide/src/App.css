@@ -1,7 +1,5 @@
-
-
 .App {
-  padding-left: 20px;
+  padding-left: 50px;
 }
 
 .journey {
@@ -11,19 +9,15 @@
   /* background: gray; */
 }
 
-@property --percentage{
-  syntax: '<number>';
-  inherits: true;
-  initial-value: 0;
-}
 
 .journey::before {
   content: '';
   position: absolute;
   top: 0;
-  left: -10px;
+  left: -20px;
   height: 100%;
   width: 2px;
+  z-index: -1;
 
   background: linear-gradient(
     to bottom, 
@@ -36,18 +30,49 @@
 
 
 
+.pie-wrapper {
+  position: absolute;
+  left: -33px;
+  top: 10px;
+}
+
+.bg-pie {
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  position: relative;
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    border: 2px solid green;
+    border-radius: 50%;  /* This ensures the shape is a circle */
+    box-sizing: border-box;  /* This ensures that the border width is included in the total width and height */
+}
+
+.bg-pie::before {
+  content: '';
+  display: block;
+  width: 10px;
+  position: absolute;
+  background: white;
+  height: 32px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
 
 .pie {
+  box-sizing: border-box;
   --percentage:20;
-  --color:tomato;
-  --width: 18px;
+  --color:green;
+  --size: 18px;
   
-  width:var(--width);
-  aspect-ratio:1;
+  width:var(--size);
+  height:var(--size);
   position:relative;
-  display:inline-grid;
-  margin:5px;
-  place-content:center;
+  /* display:inline-grid; */
+  /* place-content:center; */
 }
 .pie:before,
 .pie:after {
@@ -64,7 +89,7 @@
 .pie:after {
   inset:50%;
   background:var(--color);
-  transform:rotate(calc(var(--percentage)*3.6deg)) translateY(calc(50% - var(--width)/2));
+  transform:rotate(calc(var(--percentage)*3.6deg)) translateY(calc(50% - var(--size)/2));
 }
 .no-round:before {
   background-size:0 0,auto;
