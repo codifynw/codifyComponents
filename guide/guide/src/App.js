@@ -17,7 +17,7 @@ function App() {
         {/* <div className="circle-border" style={{ background: generateCircularProgress(10) }}>
           <div className="journey-progress-indicator"></div>
         </div> */}
-        <div className="pie animate no-round" style={{'--p': 20}} />
+        <div className="pie animate no-round" style={{'--percentage': 50}} ></div>
         <h1>Guide One</h1>
         <p>Guide</p>
       </div>
